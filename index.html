@@ -3,27 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olá Mundo com Messi</title>
+    <title>Olá Mundo - Design Moderno</title>
     <style>
+        /* Importando uma fonte mais moderna */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            /* Fundo gradiente que lembra o espaço */
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px); /* Efeito de vidro */
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
             text-align: center;
-            background-color: #f0f0f0;
+            max-width: 400px;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-10px);
         }
 
         h1 {
-            color: #4CAF50;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #4CAF50, #81C784);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .image-wrapper {
+            position: relative;
+            display: inline-block;
         }
 
         img {
-            width: 300px;
-            border-radius: 10px;
-            margin-top: 20px;
+            width: 100%;
+            max-width: 280px;
+            border-radius: 50%; /* Deixa a Terra redondinha */
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        p {
+            margin-top: 1.5rem;
+            font-weight: 300;
+            opacity: 0.8;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <h1>Olá Mundo!</h1>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg" alt="terra">
+
+    <div class="container">
+        <h1>Olá Mundo!</h1>
+        <div class="image-wrapper">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg" alt="Planeta Terra">
+        </div>
+        <p>DENNIS.</p>
+    </div>
+
 </body>
 </html>
