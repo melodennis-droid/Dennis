@@ -124,8 +124,7 @@
         </div>
 
         <h2 style="margin-bottom: 20px;">Resultados</h2>
-        <div class="grid-container" id="playlist-grid">
-            </div>
+        <div class="grid-container" id="playlist-grid"></div>
     </main>
 
     <footer class="player-bar">
@@ -166,94 +165,9 @@
 
     <script>
         const songs = [
-            { title: "Summer Vibes", artist: "Bensound", cover: "https://picsum.photos/id/10/200", file: "https://www.bensound.com/bensound-music/bensound-summer.mp3" },
-            { title: "Creative Minds", artist: "Bensound", cover: "https://picsum.photos/id/20/200", file: "https://www.bensound.com/bensound-music/bensound-creativeminds.mp3" },
-            { title: "Going Higher", artist: "Corporate", cover: "https://picsum.photos/id/30/200", file: "https://www.bensound.com/bensound-music/bensound-goinghigher.mp3" },
-            { title: "Acoustic Breeze", artist: "Relax", cover: "https://picsum.photos/id/40/200", file: "https://www.bensound.com/bensound-music/bensound-acousticbreeze.mp3" },
-            { title: "Sunny Day", artist: "Pop", cover: "https://picsum.photos/id/50/200", file: "https://www.bensound.com/bensound-music/bensound-sunny.mp3" }
-        ];
-
-        const audio = document.getElementById('main-audio');
-        const masterPlay = document.getElementById('masterPlay');
-        const grid = document.getElementById('playlist-grid');
-        const searchInput = document.getElementById('searchInput');
-        const progressBar = document.getElementById('progress-bar');
-        const timeNow = document.getElementById('time-now');
-        const timeTotal = document.getElementById('time-total');
-
-        let songIndex = 0;
-
-        // Função para criar a galeria (usada na busca também)
-        function renderSongs(songsToDisplay) {
-            grid.innerHTML = "";
-            songsToDisplay.forEach((song) => {
-                // Encontrar o index original da música para tocar corretamente
-                const originalIndex = songs.findIndex(s => s.file === song.file);
-                
-                const card = document.createElement('div');
-                card.classList.add('music-card');
-                card.innerHTML = `
-                    <img src="${song.cover}" alt="Capa">
-                    <h4>${song.title}</h4>
-                    <p>${song.artist}</p>
-                `;
-                card.onclick = () => loadSong(originalIndex);
-                grid.appendChild(card);
-            });
-        }
-
-        // Lógica da Busca
-        searchInput.addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            const filtered = songs.filter(song => 
-                song.title.toLowerCase().includes(term) || 
-                song.artist.toLowerCase().includes(term)
-            );
-            renderSongs(filtered);
-        });
-
-        // Inicializar
-        renderSongs(songs);
-
-        function loadSong(index) {
-            songIndex = index;
-            const song = songs[songIndex];
-            audio.src = song.file;
-            document.getElementById('curr-title').innerText = song.title;
-            document.getElementById('curr-artist').innerText = song.artist;
-            document.getElementById('curr-img').src = song.cover;
-            playSong();
-        }
-
-        function playSong() {
-            audio.play();
-            masterPlay.classList.replace('fa-play-circle', 'fa-pause-circle');
-        }
-
-        function pauseSong() {
-            audio.pause();
-            masterPlay.classList.replace('fa-pause-circle', 'fa-play-circle');
-        }
-
-        masterPlay.onclick = () => {
-            if (!audio.src) return;
-            if (audio.paused) playSong(); else pauseSong();
-        };
-
-        audio.ontimeupdate = (e) => {
-            const { duration, currentTime } = e.srcElement;
-            if (duration) {
-                const percent = (currentTime / duration) * 100;
-                progressBar.style.width = `${percent}%`;
-                
-                let min = Math.floor(currentTime / 60);
-                let sec = Math.floor(currentTime % 60);
-                timeNow.innerText = `${min}:${sec < 10 ? '0'+sec : sec}`;
-
-                let minT = Math.floor(duration / 60);
-                let secT = Math.floor(duration % 60);
-                timeTotal.innerText = `${minT}:${secT < 10 ? '0'+secT : secT}`;
-            }
-        };
-
-        document.getElementById('progress-container').onclick = (e) => {
+            { title: "Summer Vibes", artist: "Bensound", cover: "https://picsum.photos/id/101/200", file: "https://www.bensound.com/bensound-music/bensound-summer.mp3" },
+            { title: "Creative Minds", artist: "Bensound", cover: "https://picsum.photos/id/102/200", file: "https://www.bensound.com/bensound-music/bensound-creativeminds.mp3" },
+            { title: "Going Higher", artist: "Bensound", cover: "https://picsum.photos/id/103/200", file: "https://www.bensound.com/bensound-music/bensound-goinghigher.mp3" },
+            { title: "Acoustic Breeze", artist: "Bensound", cover: "https://picsum.photos/id/104/200", file: "https://www.bensound.com/bensound-music/bensound-acousticbreeze.mp3" },
+            { title: "Sunny Day", artist: "Bensound", cover: "https://picsum.photos/id/105/200", file: "https://www.bensound.com/bensound-music/bensound-sunny.mp3" },
+            { title: "Energy", artist: "Bensound", cover: "https://picsum.photos/id/106/200", file: "https://www.bens
