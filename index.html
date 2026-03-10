@@ -2,90 +2,146 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>CSS Aim Trainer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clique aqui - Design Moderno</title>
     <style>
+        /* Importando uma fonte mais moderna */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
         body {
             margin: 0;
-            background: #1a1a1a;
-            color: white;
-            font-family: sans-serif;
-            overflow: hidden;
+            padding: 0;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            cursor: crosshair;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            /* Fundo gradiente que lembra o espaço */
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            color: white;
+            transition: background 0.3s, color 0.3s; /* Transição suave para as mudanças de tema */
         }
 
-        h1 { margin-top: 20px; color: #00ffcc; }
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px); /* Efeito de vidro */
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            text-align: center;
+            max-width: 600px; /* Aumentei a largura para acomodar duas imagens */
+            display: flex;
+            justify-content: space-around; /* Para alinhar as imagens lado a lado */
+            transition: transform 0.3s ease;
+        }
 
-        /* Container do Jogo */
-        .game-world {
+        .container:hover {
+            transform: translateY(-10px);
+        }
+
+        h1 {
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #4CAF50, #81C784);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .image-wrapper {
             position: relative;
-            width: 80vw;
-            height: 70vh;
-            background: #252525;
-            border: 2px solid #444;
-            overflow: hidden;
+            display: inline-block;
         }
 
-        /* Esconder os checkboxes reais */
-        input[type="checkbox"] {
-            display: none;
+        img {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 50%; /* Deixa a Terra redondinha */
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer; /* Faz o cursor virar uma mãozinha */
         }
 
-        /* O Alvo */
-        .target {
+        p {
+            margin-top: 1.5rem;
+            font-weight: 300;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Estilos para o botão de troca de tema */
+        .theme-switcher {
             position: absolute;
-            width: 40px;
-            height: 40px;
-            background: radial-gradient(circle, red 30%, white 31%, white 60%, red 61%);
-            border-radius: 50%;
-            display: block;
-            transition: transform 0.1s;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 30px;
         }
 
-        /* Animação de movimento para cada alvo */
-        @keyframes move1 { 0%, 100% { top: 10%; left: 10%; } 50% { top: 80%; left: 80%; } }
-        @keyframes move2 { 0%, 100% { top: 70%; left: 20%; } 50% { top: 20%; left: 70%; } }
-        @keyframes move3 { 0%, 100% { top: 40%; left: 80%; } 50% { top: 50%; left: 10%; } }
-
-        .t1 { animation: move1 4s infinite linear; }
-        .t2 { animation: move2 3s infinite linear; }
-        .t3 { animation: move3 5s infinite linear; }
-
-        /* Lógica: Quando o checkbox é marcado (clicado), o alvo some */
-        input:checked + .target {
-            display: none;
+        .theme-switcher input {
+            margin-right: 10px;
         }
 
-        /* Contador de Pontos (CSS Puro) */
-        body { counter-reset: score; }
-        input:checked { counter-increment: score; }
+        .light-theme {
+            background: #fff;
+            color: #000;
+            transition: background 0.3s, color 0.3s;
+        }
 
-        .score-board::after {
-            content: "Alvos atingidos: " counter(score);
-            font-size: 24px;
-            font-weight: bold;
+        .dark-theme {
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            color: white;
         }
     </style>
 </head>
-<body>
-
-    <h1>CSS Aim Trainer</h1>
-    <div class="score-board"></div>
-
-    <div class="game-world">
-        <input type="checkbox" id="t1">
-        <label for="t1" class="target t1"></label>
-
-        <input type="checkbox" id="t2">
-        <label for="t2" class="target t2"></label>
-
-        <input type="checkbox" id="t3">
-        <label for="t3" class="target t3"></label>
+<body class="dark-theme">
+    <div class="theme-switcher">
+        <input type="checkbox" id="theme-toggle">
+        <label for="theme-toggle">Modo Claro / Escuro</label>
     </div>
 
-    <p>Clique nos alvos para eliminá-los!</p>
+    <div class="container">
+        <h1>Clique aqui</h1>
+        
+        <!-- Removido a imagem da NASA e o link -->
+        <div class="image-wrapper">
+            <!-- Link para abrir o Google Earth -->
+            <a href="https://earth.google.com/web/" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg" alt="Planeta Terra">
+            </a>
+        </div>
 
+        <p></p>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        // Verifica se o tema preferido está salvo no localStorage
+        if (localStorage.getItem('theme') === 'light') {
+            body.classList.remove('dark-theme');
+            body.classList.add('light-theme');
+            themeToggle.checked = true;
+        }
+
+        // Alterna entre o tema claro e escuro
+        themeToggle.addEventListener('change', function () {
+            if (this.checked) {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
 </body>
 </html>
