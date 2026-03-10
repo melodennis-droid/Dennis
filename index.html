@@ -22,7 +22,7 @@
         padding: 15px 30px;
     }
 
-    header h1 { font-size: 24px; color: #ff4081; }
+    header h1 { font-size: 24px; color: #ff4081; text-transform: uppercase; letter-spacing: 2px; }
 
     nav {
         display: flex;
@@ -38,6 +38,7 @@
         transition: all 0.3s;
         color: #555;
         border-radius: 4px;
+        font-weight: 500;
     }
 
     nav button:hover, nav button.active {
@@ -54,9 +55,9 @@
     .search-bar input {
         width: 60%;
         max-width: 400px;
-        padding: 10px 15px;
+        padding: 12px 20px;
         border-radius: 50px;
-        border: 1px solid #ccc;
+        border: 1px solid #ddd;
         outline: none;
         font-size: 14px;
         transition: all 0.3s;
@@ -64,62 +65,69 @@
 
     .search-bar input:focus {
         border-color: #ff4081;
-        box-shadow: 0 0 5px #ff4081;
+        box-shadow: 0 0 8px rgba(255, 64, 129, 0.2);
     }
 
     /* Produtos */
     .products {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 30px;
         padding: 20px 30px;
+        max-width: 1200px;
+        margin: 0 auto;
     }
 
     .product-card {
         background: #fff;
-        border-radius: 8px;
+        border-radius: 12px;
         overflow: hidden;
         transition: transform 0.3s, box-shadow 0.3s;
         cursor: pointer;
         text-align: center;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
     .product-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        transform: translateY(-8px);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.1);
     }
 
     .product-card img {
         width: 100%;
-        height: 250px;
+        height: 320px;
         object-fit: cover;
     }
 
     .product-card h3 {
-        padding: 10px;
+        padding: 15px 10px 5px;
         font-size: 16px;
+        color: #444;
     }
 
     .product-card p {
         color: #ff4081;
         font-weight: bold;
-        padding-bottom: 10px;
+        padding-bottom: 20px;
+        font-size: 18px;
     }
 
-    /* Categoria invisível por padrão */
+    /* Controle de categorias */
     .category { display: none; }
-    .category.active { display: grid; }
+    .category.active { display: contents; } /* Use 'contents' para manter o grid pai */
 
     @media(max-width: 600px) {
         .search-bar input { width: 90%; }
+        header { flex-direction: column; gap: 15px; }
+        .products { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); padding: 10px; }
+        .product-card img { height: 200px; }
     }
 </style>
 </head>
 <body>
 
 <header>
-    <h1>Fashion</h1>
+    <h1>Fashion Store</h1>
     <nav>
         <button class="tab-btn active" data-category="shorts">Shorts</button>
         <button class="tab-btn" data-category="calcas">Calças</button>
@@ -128,54 +136,51 @@
 </header>
 
 <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="O que você está procurando?">
+    <input type="text" id="searchInput" placeholder="O que você está procurando hoje?">
 </div>
 
-<div class="products">
+<main class="products">
 
-    <!-- Shorts -->
     <div class="category shorts active">
         <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1593032465173-ef1f25b3a6b0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400" alt="Short Jeans">
-            <h3>Short Jeans</h3>
+            <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&q=80&w=400" alt="Short Jeans">
+            <h3>Short Jeans Premium</h3>
             <p>R$ 79,90</p>
         </div>
         <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1582878883726-36d8a66c4fc3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400" alt="Short Moletom">
-            <h3>Short Moletom</h3>
+            <img src="https://images.unsplash.com/photo-1591195853730-410a6245d8b7?auto=format&fit=crop&q=80&w=400" alt="Short Moletom">
+            <h3>Short Moletom Confort</h3>
             <p>R$ 59,90</p>
         </div>
     </div>
 
-    <!-- Calças -->
     <div class="category calcas">
         <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1593032484286-348f5f7311da?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400" alt="Calça Jeans">
-            <h3>Calça Jeans</h3>
+            <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=400" alt="Calça Jeans">
+            <h3>Calça Jeans Slim Fit</h3>
             <p>R$ 129,90</p>
         </div>
         <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1593032469234-7fce7ad0984f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400" alt="Calça Moletom">
-            <h3>Calça Moletom</h3>
+            <img src="https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&q=80&w=400" alt="Calça Moletom">
+            <h3>Calça Jogger Urban</h3>
             <p>R$ 99,90</p>
         </div>
     </div>
 
-    <!-- Camisetas -->
     <div class="category camisetas">
         <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1600180758895-1ec504e37dbb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400" alt="Camiseta Básica">
-            <h3>Camiseta Básica</h3>
+            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=400" alt="Camiseta Básica">
+            <h3>Camiseta Básica Cotton</h3>
             <p>R$ 49,90</p>
         </div>
         <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1618354696448-d688aa9d0810?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=400" alt="Camiseta Estampada">
-            <h3>Camiseta Estampada</h3>
+            <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=400" alt="Camiseta Estampada">
+            <h3>Camiseta Graphic Tee</h3>
             <p>R$ 59,90</p>
         </div>
     </div>
 
-</div>
+</main>
 
 <script>
     const buttons = document.querySelectorAll('.tab-btn');
@@ -185,33 +190,55 @@
     // Alternar categorias
     buttons.forEach(btn => {
         btn.addEventListener('click', () => {
+            // Remove active dos botões
             buttons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            const cat = btn.dataset.category;
+            // Filtra as categorias
+            const catSelected = btn.dataset.category;
             categories.forEach(c => {
-                c.classList.remove('active');
-                if(c.classList.contains(cat)) c.classList.add('active');
+                if(c.classList.contains(catSelected)) {
+                    c.classList.add('active');
+                } else {
+                    c.classList.remove('active');
+                }
             });
+            // Limpa a busca ao trocar de aba para não bugar
+            searchInput.value = "";
+            showAllCards();
         });
     });
 
-    // Busca simples por nome
+    function showAllCards() {
+        document.querySelectorAll('.product-card').forEach(card => card.style.display = 'block');
+    }
+
+    // Busca por nome
     searchInput.addEventListener('input', () => {
         const term = searchInput.value.toLowerCase();
+        
         categories.forEach(cat => {
             const cards = cat.querySelectorAll('.product-card');
-            let anyVisible = false;
+            let anyVisibleInCat = false;
+
             cards.forEach(card => {
                 const title = card.querySelector('h3').innerText.toLowerCase();
                 if(title.includes(term)) {
                     card.style.display = 'block';
-                    anyVisible = true;
+                    anyVisibleInCat = true;
                 } else {
                     card.style.display = 'none';
                 }
             });
-            cat.style.display = anyVisible ? 'grid' : 'none';
+
+            // Se estiver buscando, mostra a categoria se houver resultados
+            if(term !== "") {
+                cat.style.display = anyVisibleInCat ? 'contents' : 'none';
+            } else {
+                // Se busca vazia, volta ao comportamento normal das abas
+                const activeBtn = document.querySelector('.tab-btn.active').dataset.category;
+                cat.style.display = cat.classList.contains(activeBtn) ? 'contents' : 'none';
+            }
         });
     });
 </script>
