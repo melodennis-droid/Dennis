@@ -3,100 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loja de Roupas</title>
+<title>Loja Fashion</title>
 <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    /* Reset e fontes */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+    body { background-color: #f9f9f9; color: #333; }
 
-    body {
-        background-color: #f5f5f5;
-        color: #333;
-    }
-
+    /* Header */
     header {
-        background-color: #222;
-        color: white;
-        padding: 20px;
-        text-align: center;
-        font-size: 24px;
-        font-weight: bold;
+        background-color: #fff;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
     }
+
+    header h1 { font-size: 24px; color: #ff4081; }
 
     nav {
         display: flex;
-        justify-content: center;
-        background-color: #333;
+        gap: 20px;
     }
 
     nav button {
         background: none;
         border: none;
-        color: white;
-        padding: 15px 25px;
-        cursor: pointer;
         font-size: 16px;
-        transition: background 0.3s;
+        cursor: pointer;
+        padding: 8px 15px;
+        transition: all 0.3s;
+        color: #555;
+        border-radius: 4px;
     }
 
     nav button:hover, nav button.active {
-        background-color: #1DB954;
+        background-color: #ff4081;
+        color: white;
     }
 
+    /* Busca */
+    .search-bar {
+        margin: 20px auto;
+        text-align: center;
+    }
+
+    .search-bar input {
+        width: 60%;
+        max-width: 400px;
+        padding: 10px 15px;
+        border-radius: 50px;
+        border: 1px solid #ccc;
+        outline: none;
+        font-size: 14px;
+        transition: all 0.3s;
+    }
+
+    .search-bar input:focus {
+        border-color: #ff4081;
+        box-shadow: 0 0 5px #ff4081;
+    }
+
+    /* Produtos */
     .products {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
         gap: 20px;
-        padding: 20px;
+        padding: 20px 30px;
     }
 
     .product-card {
-        background-color: white;
+        background: #fff;
         border-radius: 8px;
         overflow: hidden;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        cursor: pointer;
         text-align: center;
-        transition: transform 0.3s;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
     .product-card:hover {
         transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
     .product-card img {
         width: 100%;
-        height: 200px;
+        height: 250px;
         object-fit: cover;
     }
 
     .product-card h3 {
         padding: 10px;
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .product-card p {
-        color: #666;
+        color: #ff4081;
+        font-weight: bold;
         padding-bottom: 10px;
     }
 
-    /* Esconder todas as categorias por padrão */
-    .category {
-        display: none;
+    /* Categoria invisível por padrão */
+    .category { display: none; }
+    .category.active { display: grid; }
+
+    @media(max-width: 600px) {
+        .search-bar input { width: 90%; }
     }
 
-    /* Mostrar categoria ativa */
-    .category.active {
-        display: grid;
-    }
 </style>
 </head>
 <body>
 
-<header>Minha Loja de Roupas</header>
+<header>
+    <h1>Fashion</h1>
+    <nav>
+        <button class="tab-btn active" data-category="shorts">Shorts</button>
+        <button class="tab-btn" data-category="calcas">Calças</button>
+        <button class="tab-btn" data-category="camisetas">Camisetas</button>
+    </nav>
+</header>
 
-<nav>
-    <button class="tab-btn active" data-category="shorts">Shorts</button>
-    <button class="tab-btn" data-category="calcas">Calças</button>
-    <button class="tab-btn" data-category="camisetas">Camisetas</button>
-</nav>
+<div class="search-bar">
+    <input type="text" id="searchInput" placeholder="O que você está procurando?">
+</div>
 
 <div class="products">
 
@@ -147,21 +181,39 @@
 <script>
     const buttons = document.querySelectorAll('.tab-btn');
     const categories = document.querySelectorAll('.category');
+    const searchInput = document.getElementById('searchInput');
 
+    // Alternar categorias
     buttons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Remover active dos botões
             buttons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            // Mostrar categoria selecionada
             const cat = btn.dataset.category;
             categories.forEach(c => {
                 c.classList.remove('active');
-                if(c.classList.contains(cat)) {
-                    c.classList.add('active');
+                if(c.classList.contains(cat)) c.classList.add('active');
+            });
+        });
+    });
+
+    // Busca simples por nome
+    searchInput.addEventListener('input', () => {
+        const term = searchInput.value.toLowerCase();
+        categories.forEach(cat => {
+            const cards = cat.querySelectorAll('.product-card');
+            let anyVisible = false;
+            cards.forEach(card => {
+                const title = card.querySelector('h3').innerText.toLowerCase();
+                if(title.includes(term)) {
+                    card.style.display = 'block';
+                    anyVisible = true;
+                } else {
+                    card.style.display = 'none';
                 }
             });
+            // Mostrar categoria se algum produto combina
+            cat.style.display = anyVisible ? 'grid' : 'none';
         });
     });
 </script>
