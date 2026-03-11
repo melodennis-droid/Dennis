@@ -1,105 +1,109 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fashion Store</title>
-<style>
-/* Reset e fontes */
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Store - Nova Coleção</title>
+    <style>
+        /* Reset e fontes */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
 
-/* Header */
-header {
-    background-color: #fff;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 5%;
-}
+        /* Header */
+        header {
+            background-color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+        }
 
-header h1 { font-size: 22px; color: #ff4081; text-transform: uppercase; letter-spacing: 2px; }
+        header h1 { font-size: 22px; color: #ff4081; text-transform: uppercase; letter-spacing: 2px; }
 
-nav { display: flex; gap: 10px; }
+        nav { display: flex; gap: 10px; }
 
-nav button {
-    background: none;
-    border: none;
-    font-size: 14px;
-    cursor: pointer;
-    padding: 8px 15px;
-    transition: 0.3s;
-    color: #666;
-    border-radius: 20px;
-    font-weight: 600;
-}
+        nav button {
+            background: #f0f0f0;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px 15px;
+            transition: 0.3s;
+            color: #666;
+            border-radius: 20px;
+            font-weight: 600;
+        }
 
-nav button.active { background-color: #ff4081; color: white; }
+        nav button.active { background-color: #ff4081; color: white; }
+        nav button:hover:not(.active) { background-color: #e0e0e0; }
 
-/* Busca */
-.search-bar { margin: 25px auto; text-align: center; padding: 0 20px; }
+        /* Busca */
+        .search-bar { margin: 25px auto; text-align: center; padding: 0 20px; }
 
-.search-bar input {
-    width: 100%;
-    max-width: 500px;
-    padding: 12px 25px;
-    border-radius: 30px;
-    border: 1px solid #ddd;
-    outline: none;
-    font-size: 15px;
-    transition: 0.3s;
-}
+        .search-bar input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 25px;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            outline: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
 
-.search-bar input:focus { border-color: #ff4081; box-shadow: 0 0 8px rgba(255, 64, 129, 0.2); }
+        .search-bar input:focus { border-color: #ff4081; box-shadow: 0 0 8px rgba(255, 64, 129, 0.2); }
 
-/* Layout do Grid */
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 25px;
-    padding: 20px 5%;
-    max-width: 1300px;
-    margin: 0 auto;
-}
+        /* Layout do Grid */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+            padding: 20px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+            min-height: 400px;
+        }
 
-/* Cards */
-.product-card {
-    background: #fff;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-}
+        /* Cards */
+        .product-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: block; /* Garantir exibição padrão */
+        }
 
-.product-card:hover { transform: translateY(-5px); }
+        .product-card:hover { transform: translateY(-5px); }
 
-.product-card img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    display: block;
-}
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            background-color: #eee; /* Cor de fundo enquanto carrega */
+        }
 
-.product-card h3 { padding: 15px 10px 5px; font-size: 16px; color: #333; }
-.product-card p { color: #ff4081; font-weight: bold; padding-bottom: 20px; font-size: 18px; }
+        .product-card h3 { padding: 15px 10px 5px; font-size: 16px; color: #333; }
+        .product-card p { color: #ff4081; font-weight: bold; padding-bottom: 20px; font-size: 18px; }
 
-/* Lógica de Exibição */
-.category { display: none; }
-.category.active { display: contents; }
+        /* Lógica de Exibição das Categorias */
+        .category { display: none; }
+        .category.active { display: contents; }
 
-@media(max-width: 600px) {
-    header { flex-direction: column; padding: 15px; text-align: center; }
-    nav { margin-top: 10px; }
-    .products { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 10px; }
-    .product-card img { height: 200px; }
-    .product-card h3 { font-size: 14px; }
-}
-</style>
+        @media(max-width: 600px) {
+            header { flex-direction: column; padding: 15px; text-align: center; }
+            nav { margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+            .products { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 10px; }
+            .product-card img { height: 200px; }
+            .product-card h3 { font-size: 14px; }
+        }
+    </style>
 </head>
 <body>
 
@@ -114,18 +118,18 @@ nav button.active { background-color: #ff4081; color: white; }
 </header>
 
 <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Buscar produto...">
+    <input type="text" id="searchInput" placeholder="Buscar produto nesta categoria...">
 </div>
 
 <main class="products">
     <div class="category shorts active">
         <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=500" alt="Short Jeans">
+            <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=500&q=80" alt="Short Jeans">
             <h3>Short Jeans Premium</h3>
             <p>R$ 79,90</p>
         </div>
         <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1591195853730-410a6245d8b7?q=80&w=500" alt="Short Moletom">
+            <img src="https://images.unsplash.com/photo-1591195853730-410a6245d8b7?auto=format&fit=crop&w=500&q=80" alt="Short Moletom">
             <h3>Short Moletom Confort</h3>
             <p>R$ 59,90</p>
         </div>
@@ -133,12 +137,12 @@ nav button.active { background-color: #ff4081; color: white; }
 
     <div class="category calcas">
         <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=500" alt="Calça Jeans">
+            <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=500&q=80" alt="Calça Jeans">
             <h3>Calça Jeans Slim</h3>
             <p>R$ 129,90</p>
         </div>
         <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1552902865-b72c031ac5ea?q=80&w=500" alt="Calça Moletom">
+            <img src="https://images.unsplash.com/photo-1624371414361-e6e8ea7c7526?auto=format&fit=crop&w=500&q=80" alt="Calça Jogger">
             <h3>Calça Jogger Urban</h3>
             <p>R$ 99,90</p>
         </div>
@@ -146,12 +150,12 @@ nav button.active { background-color: #ff4081; color: white; }
 
     <div class="category camisetas">
         <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=500" alt="Camiseta Básica">
+            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=500&q=80" alt="Camiseta Branca">
             <h3>Camiseta Básica Cotton</h3>
             <p>R$ 49,90</p>
         </div>
         <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=500" alt="Camiseta Black">
+            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=500&q=80" alt="Camiseta Preta">
             <h3>Camiseta Minimalist Black</h3>
             <p>R$ 59,90</p>
         </div>
@@ -159,12 +163,12 @@ nav button.active { background-color: #ff4081; color: white; }
 
     <div class="category acessorios">
         <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1605710023889-b49e9d72ac9a?q=80&w=500" alt="Corrente de Ouro">
+            <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=500&q=80" alt="Corrente">
             <h3>Corrente de Ouro</h3>
             <p>R$ 159,90</p>
         </div>
         <div class="product-card">
-            <img src="https://images.unsplash.com/photo-1586302335367-b3ee7ab212c3?q=80&w=500" alt="Anel de Prata">
+            <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80" alt="Anel">
             <h3>Anel de Prata</h3>
             <p>R$ 89,90</p>
         </div>
@@ -189,15 +193,17 @@ nav button.active { background-color: #ff4081; color: white; }
                 c.classList.toggle('active', c.classList.contains(catTarget));
             });
             
-            // Limpa a busca ao trocar de aba
+            // Limpa a busca ao trocar de aba para mostrar todos os itens da nova categoria
             searchInput.value = "";
             resetSearch();
         });
     });
 
-    // Reseta a exibição de todos os produtos
+    // Reseta a exibição de todos os produtos (coloca como block)
     function resetSearch() {
-        document.querySelectorAll('.product-card').forEach(card => card.style.display = 'block');
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.style.display = 'block';
+        });
     }
 
     // Lógica da Busca
@@ -205,12 +211,11 @@ nav button.active { background-color: #ff4081; color: white; }
         const term = searchInput.value.toLowerCase();
 
         categories.forEach(cat => {
-            // Faz a busca apenas na categoria que está ativa no momento
+            // Só filtra se a categoria estiver visível (active)
             if (cat.classList.contains('active')) {
                 const cards = cat.querySelectorAll('.product-card');
                 cards.forEach(card => {
                     const title = card.querySelector('h3').textContent.toLowerCase();
-                    // Verifica se o título do produto inclui o termo digitado
                     if (title.includes(term)) {
                         card.style.display = 'block';
                     } else {
