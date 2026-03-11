@@ -1,106 +1,106 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fashion Store</title>
-<style>
-    /* Reset e fontes */
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-    body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Store</title>
+    <style>
+        /* Reset e fontes */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
 
-    /* Header */
-    header {
-        background-color: #fff;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 5%;
-    }
+        /* Header */
+        header {
+            background-color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+        }
 
-    header h1 { font-size: 22px; color: #ff4081; text-transform: uppercase; letter-spacing: 2px; }
+        header h1 { font-size: 22px; color: #ff4081; text-transform: uppercase; letter-spacing: 2px; }
 
-    nav { display: flex; gap: 10px; }
+        nav { display: flex; gap: 10px; }
 
-    nav button {
-        background: none;
-        border: none;
-        font-size: 14px;
-        cursor: pointer;
-        padding: 8px 15px;
-        transition: 0.3s;
-        color: #666;
-        border-radius: 20px;
-        font-weight: 600;
-    }
+        nav button {
+            background: none;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px 15px;
+            transition: 0.3s;
+            color: #666;
+            border-radius: 20px;
+            font-weight: 600;
+        }
 
-    nav button.active { background-color: #ff4081; color: white; }
+        nav button.active { background-color: #ff4081; color: white; }
 
-    /* Busca */
-    .search-bar { margin: 25px auto; text-align: center; padding: 0 20px; }
+        /* Busca */
+        .search-bar { margin: 25px auto; text-align: center; padding: 0 20px; }
 
-    .search-bar input {
-        width: 100%;
-        max-width: 500px;
-        padding: 12px 25px;
-        border-radius: 30px;
-        border: 1px solid #ddd;
-        outline: none;
-        font-size: 15px;
-        transition: 0.3s;
-    }
+        .search-bar input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 25px;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            outline: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
 
-    .search-bar input:focus { border-color: #ff4081; box-shadow: 0 0 8px rgba(255, 64, 129, 0.2); }
+        .search-bar input:focus { border-color: #ff4081; box-shadow: 0 0 8px rgba(255, 64, 129, 0.2); }
 
-    /* Layout do Grid */
-    .products {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 25px;
-        padding: 20px 5%;
-        max-width: 1300px;
-        margin: 0 auto;
-    }
+        /* Layout do Grid */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+            padding: 20px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
 
-    /* Cards */
-    .product-card {
-        background: #fff;
-        border-radius: 15px;
-        overflow: hidden;
-        transition: transform 0.3s ease;
-        text-align: center;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    }
+        /* Cards */
+        .product-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
 
-    .product-card:hover { transform: translateY(-5px); }
+        .product-card:hover { transform: translateY(-5px); }
 
-    .product-card img {
-        width: 100%;
-        height: 300px;
-        object-fit: cover;
-        display: block;
-    }
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
 
-    .product-card h3 { padding: 15px 10px 5px; font-size: 16px; color: #333; }
+        .product-card h3 { padding: 15px 10px 5px; font-size: 16px; color: #333; }
 
-    .product-card p { color: #ff4081; font-weight: bold; padding-bottom: 20px; font-size: 18px; }
+        .product-card p { color: #ff4081; font-weight: bold; padding-bottom: 20px; font-size: 18px; }
 
-    /* Lógica de Exibição */
-    .category { display: none; }
-    .category.active { display: contents; }
+        /* Lógica de Exibição */
+        .category { display: none; }
+        .category.active { display: contents; }
 
-    @media(max-width: 600px) {
-        header { flex-direction: column; padding: 15px; text-align: center; }
-        nav { margin-top: 10px; }
-        .products { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 10px; }
-        .product-card img { height: 200px; }
-        .product-card h3 { font-size: 14px; }
-    }
-</style>
+        @media(max-width: 600px) {
+            header { flex-direction: column; padding: 15px; text-align: center; }
+            nav { margin-top: 10px; }
+            .products { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 10px; }
+            .product-card img { height: 200px; }
+            .product-card h3 { font-size: 14px; }
+        }
+    </style>
 </head>
 <body>
 
@@ -110,6 +110,7 @@
         <button class="tab-btn active" data-category="shorts">Shorts</button>
         <button class="tab-btn" data-category="calcas">Calças</button>
         <button class="tab-btn" data-category="camisetas">Camisetas</button>
+        <button class="tab-btn" data-category="acessorios">Acessórios</button> <!-- Nova aba -->
     </nav>
 </header>
 
@@ -118,7 +119,7 @@
 </div>
 
 <main class="products">
-
+    <!-- Shorts -->
     <div class="category shorts active">
         <div class="product-card">
             <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=500" alt="Short Jeans">
@@ -132,6 +133,7 @@
         </div>
     </div>
 
+    <!-- Calças -->
     <div class="category calcas">
         <div class="product-card">
             <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=500" alt="Calça Jeans">
@@ -145,6 +147,7 @@
         </div>
     </div>
 
+    <!-- Camisetas -->
     <div class="category camisetas">
         <div class="product-card">
             <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=500" alt="Camiseta Básica">
@@ -155,6 +158,20 @@
             <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=500" alt="Camiseta Black">
             <h3>Camiseta Minimalist Black</h3>
             <p>R$ 59,90</p>
+        </div>
+    </div>
+
+    <!-- Acessórios -->
+    <div class="category acessorios">
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1605710023889-b49e9d72ac9a?q=80&w=500" alt="Corrente de Ouro">
+            <h3>Corrente de Ouro</h3>
+            <p>R$ 159,90</p>
+        </div>
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1586302335367-b3ee7ab212c3?q=80&w=500" alt="Anel de Prata">
+            <h3>Anel de Prata</h3>
+            <p>R$ 89,90</p>
         </div>
     </div>
 
@@ -175,7 +192,7 @@
             categories.forEach(c => {
                 c.classList.toggle('active', c.classList.contains(catTarget));
             });
-            searchInput.value = ""; 
+            searchInput.value = "";
             resetSearch();
         });
     });
@@ -187,30 +204,7 @@
     // Busca
     searchInput.addEventListener('input', () => {
         const term = searchInput.value.toLowerCase();
-        
+
         categories.forEach(cat => {
             const cards = cat.querySelectorAll('.product-card');
-            let hasVisible = false;
-
-            cards.forEach(card => {
-                const text = card.querySelector('h3').innerText.toLowerCase();
-                if(text.includes(term)) {
-                    card.style.display = 'block';
-                    hasVisible = true;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            if(term !== "") {
-                cat.style.display = hasVisible ? 'contents' : 'none';
-            } else {
-                const activeTab = document.querySelector('.tab-btn.active').dataset.category;
-                cat.style.display = cat.classList.contains(activeTab) ? 'contents' : 'none';
-            }
-        });
-    });
-</script>
-
-</body>
-</html>
+            let
