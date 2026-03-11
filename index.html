@@ -81,4 +81,129 @@
         .product-card img { width: 100%; height: 320px; object-fit: cover; display: block; }
 
         .product-card h3 { padding: 15px 10px 5px; font-size: 15px; font-weight: 500; }
-        .product-card p { color: #ff4081; font-weight: bold; padding-bottom: 20px
+        .product-card p { color: #ff4081; font-weight: bold; padding-bottom: 20px; font-size: 18px; }
+
+        /* Controle das Categorias */
+        .category { display: none; }
+        .category.active { display: contents; }
+
+        @media(max-width: 600px) {
+            header { flex-direction: column; padding: 10px; }
+            nav { margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+            .products { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 10px; }
+            .product-card img { height: 240px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Fashion Store</h1>
+    <nav>
+        <button class="tab-btn active" data-category="shorts">Shorts</button>
+        <button class="tab-btn" data-category="calcas">Calças</button>
+        <button class="tab-btn" data-category="camisetas">Camisetas</button>
+        <button class="tab-btn" data-category="acessorios">Acessórios</button>
+    </nav>
+</header>
+
+<div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Buscar nesta categoria...">
+</div>
+
+<main class="products">
+    <div class="category shorts active">
+        <a href="COLE_AQUI_O_LINK_DO_SHORT_1" target="_blank" class="product-card">
+            <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=500&q=80" alt="Short Jeans">
+            <h3>Short Jeans Premium</h3>
+            <p>R$ 79,90</p>
+        </a>
+        <a href="COLE_AQUI_O_LINK_DO_SHORT_2" target="_blank" class="product-card">
+            <img src="https://images.unsplash.com/photo-1591195853730-410a6245d8b7?auto=format&fit=crop&w=500&q=80" alt="Short Moletom">
+            <h3>Short Moletom Confort</h3>
+            <p>R$ 59,90</p>
+        </a>
+    </div>
+
+    <div class="category calcas">
+        <a href="COLE_AQUI_O_LINK_DA_CALCA_1" target="_blank" class="product-card">
+            <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=500&q=80" alt="Calça Jeans">
+            <h3>Calça Jeans Slim</h3>
+            <p>R$ 129,90</p>
+        </a>
+        <a href="COLE_AQUI_O_LINK_DA_CALCA_2" target="_blank" class="product-card">
+            <img src="https://images.unsplash.com/photo-1624371414361-e6e8ea7c7526?auto=format&fit=crop&w=500&q=80" alt="Calça Jogger">
+            <h3>Calça Jogger Urban</h3>
+            <p>R$ 99,90</p>
+        </a>
+    </div>
+
+    <div class="category camisetas">
+        <a href="COLE_AQUI_O_LINK_DA_CAMISETA_1" target="_blank" class="product-card">
+            <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=500&q=80" alt="Camiseta Branca">
+            <h3>Camiseta Básica Cotton</h3>
+            <p>R$ 49,90</p>
+        </a>
+        <a href="COLE_AQUI_O_LINK_DA_CAMISETA_2" target="_blank" class="product-card">
+            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=500&q=80" alt="Camiseta Preta">
+            <h3>Camiseta Minimalist Black</h3>
+            <p>R$ 59,90</p>
+        </a>
+    </div>
+
+    <div class="category acessorios">
+        <a href="COLE_AQUI_O_LINK_DO_ACESSORIO_1" target="_blank" class="product-card">
+            <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=500&q=80" alt="Corrente">
+            <h3>Corrente de Ouro</h3>
+            <p>R$ 159,90</p>
+        </a>
+        <a href="COLE_AQUI_O_LINK_DO_ACESSORIO_2" target="_blank" class="product-card">
+            <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80" alt="Anel">
+            <h3>Anel de Prata</h3>
+            <p>R$ 89,90</p>
+        </a>
+    </div>
+</main>
+
+<script>
+    const buttons = document.querySelectorAll('.tab-btn');
+    const categories = document.querySelectorAll('.category');
+    const searchInput = document.getElementById('searchInput');
+
+    // Troca de Abas
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const catTarget = btn.dataset.category;
+            categories.forEach(c => {
+                c.classList.toggle('active', c.classList.contains(catTarget));
+            });
+            searchInput.value = "";
+            resetSearch();
+        });
+    });
+
+    function resetSearch() {
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.style.display = 'block';
+        });
+    }
+
+    // Filtro de Busca
+    searchInput.addEventListener('input', () => {
+        const term = searchInput.value.toLowerCase();
+        categories.forEach(cat => {
+            if (cat.classList.contains('active')) {
+                const cards = cat.querySelectorAll('.product-card');
+                cards.forEach(card => {
+                    const title = card.querySelector('h3').innerText.toLowerCase();
+                    card.style.display = title.includes(term) ? 'block' : 'none';
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
