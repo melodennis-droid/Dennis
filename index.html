@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Store - Nova Coleção</title>
     <style>
-        /* Estilos de Reset e Base */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background-color: #f8f9fa; color: #333; line-height: 1.6; }
+        body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
 
-        /* Header Fixo */
         header {
             background-color: #fff;
             position: sticky;
@@ -24,23 +22,22 @@
 
         header h1 { font-size: 22px; color: #ff4081; text-transform: uppercase; letter-spacing: 2px; }
 
-        nav { display: flex; gap: 8px; }
+        nav { display: flex; gap: 10px; }
 
         nav button {
             background: #f0f0f0;
             border: none;
-            font-size: 13px;
+            font-size: 14px;
             cursor: pointer;
-            padding: 8px 14px;
+            padding: 8px 15px;
             transition: 0.3s;
-            color: #555;
+            color: #666;
             border-radius: 20px;
             font-weight: 600;
         }
 
         nav button.active { background-color: #ff4081; color: white; }
 
-        /* Barra de Busca */
         .search-bar { margin: 25px auto; text-align: center; padding: 0 20px; }
         .search-bar input {
             width: 100%;
@@ -49,11 +46,8 @@
             border-radius: 30px;
             border: 1px solid #ddd;
             outline: none;
-            transition: 0.3s;
         }
-        .search-bar input:focus { border-color: #ff4081; }
 
-        /* Grid de Produtos */
         .products {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -63,35 +57,38 @@
             margin: 0 auto;
         }
 
-        /* Card Clicável */
         .product-card {
             background: #fff;
-            border-radius: 12px;
+            border-radius: 15px;
             overflow: hidden;
-            transition: 0.3s;
+            transition: transform 0.3s ease;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            display: block; 
-            text-decoration: none; /* Remove sublinhado */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: block;
+            text-decoration: none;
             color: inherit;
         }
 
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .product-card:hover { transform: translateY(-5px); }
 
-        .product-card img { width: 100%; height: 320px; object-fit: cover; display: block; }
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
 
-        .product-card h3 { padding: 15px 10px 5px; font-size: 15px; font-weight: 500; }
+        .product-card h3 { padding: 15px 10px 5px; font-size: 16px; }
         .product-card p { color: #ff4081; font-weight: bold; padding-bottom: 20px; font-size: 18px; }
 
-        /* Controle das Categorias */
         .category { display: none; }
         .category.active { display: contents; }
 
         @media(max-width: 600px) {
-            header { flex-direction: column; padding: 10px; }
+            header { flex-direction: column; padding: 15px; }
             nav { margin-top: 10px; flex-wrap: wrap; justify-content: center; }
-            .products { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 10px; }
-            .product-card img { height: 240px; }
+            .products { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .product-card img { height: 200px; }
         }
     </style>
 </head>
@@ -108,17 +105,17 @@
 </header>
 
 <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Buscar nesta categoria...">
+    <input type="text" id="searchInput" placeholder="Buscar produto...">
 </div>
 
 <main class="products">
     <div class="category shorts active">
-        <a href="COLE_AQUI_O_LINK_DO_SHORT_1" target="_blank" class="product-card">
+        <a href="https://br.shein.com/Men-Shorts-c-1971.html" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=500&q=80" alt="Short Jeans">
             <h3>Short Jeans Premium</h3>
             <p>R$ 79,90</p>
         </a>
-        <a href="COLE_AQUI_O_LINK_DO_SHORT_2" target="_blank" class="product-card">
+        <a href="https://br.shein.com/Men-Shorts-c-1971.html" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1591195853730-410a6245d8b7?auto=format&fit=crop&w=500&q=80" alt="Short Moletom">
             <h3>Short Moletom Confort</h3>
             <p>R$ 59,90</p>
@@ -126,12 +123,12 @@
     </div>
 
     <div class="category calcas">
-        <a href="COLE_AQUI_O_LINK_DA_CALCA_1" target="_blank" class="product-card">
+        <a href="https://br.shein.com/Men-Pants-c-1970.html" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=500&q=80" alt="Calça Jeans">
             <h3>Calça Jeans Slim</h3>
             <p>R$ 129,90</p>
         </a>
-        <a href="COLE_AQUI_O_LINK_DA_CALCA_2" target="_blank" class="product-card">
+        <a href="https://br.shein.com/Men-Pants-c-1970.html" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1624371414361-e6e8ea7c7526?auto=format&fit=crop&w=500&q=80" alt="Calça Jogger">
             <h3>Calça Jogger Urban</h3>
             <p>R$ 99,90</p>
@@ -139,12 +136,12 @@
     </div>
 
     <div class="category camisetas">
-        <a href="COLE_AQUI_O_LINK_DA_CAMISETA_1" target="_blank" class="product-card">
+        <a href="https://br.shein.com/Men-Tops-c-1968.html" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=500&q=80" alt="Camiseta Branca">
             <h3>Camiseta Básica Cotton</h3>
             <p>R$ 49,90</p>
         </a>
-        <a href="COLE_AQUI_O_LINK_DA_CAMISETA_2" target="_blank" class="product-card">
+        <a href="https://br.shein.com/Men-Tops-c-1968.html" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=500&q=80" alt="Camiseta Preta">
             <h3>Camiseta Minimalist Black</h3>
             <p>R$ 59,90</p>
@@ -152,12 +149,12 @@
     </div>
 
     <div class="category acessorios">
-        <a href="COLE_AQUI_O_LINK_DO_ACESSORIO_1" target="_blank" class="product-card">
+        <a href="https://br.shein.com/Jewelry-Accessories-c-1757.html" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=500&q=80" alt="Corrente">
             <h3>Corrente de Ouro</h3>
             <p>R$ 159,90</p>
         </a>
-        <a href="COLE_AQUI_O_LINK_DO_ACESSORIO_2" target="_blank" class="product-card">
+        <a href="https://br.shein.com/Jewelry-Accessories-c-1757.html" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80" alt="Anel">
             <h3>Anel de Prata</h3>
             <p>R$ 89,90</p>
@@ -170,7 +167,6 @@
     const categories = document.querySelectorAll('.category');
     const searchInput = document.getElementById('searchInput');
 
-    // Troca de Abas
     buttons.forEach(btn => {
         btn.addEventListener('click', () => {
             buttons.forEach(b => b.classList.remove('active'));
@@ -190,14 +186,13 @@
         });
     }
 
-    // Filtro de Busca
     searchInput.addEventListener('input', () => {
         const term = searchInput.value.toLowerCase();
         categories.forEach(cat => {
             if (cat.classList.contains('active')) {
                 const cards = cat.querySelectorAll('.product-card');
                 cards.forEach(card => {
-                    const title = card.querySelector('h3').innerText.toLowerCase();
+                    const title = card.querySelector('h3').textContent.toLowerCase();
                     card.style.display = title.includes(term) ? 'block' : 'none';
                 });
             }
