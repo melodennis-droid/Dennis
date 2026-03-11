@@ -68,7 +68,7 @@
             min-height: 400px;
         }
 
-        /* Cards */
+        /* Cards (Agora como Links) */
         .product-card {
             background: #fff;
             border-radius: 15px;
@@ -76,17 +76,22 @@
             transition: transform 0.3s ease;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            display: block; /* Garantir exibição padrão */
+            display: block; 
+            text-decoration: none; /* Remove sublinhado do link */
+            color: inherit;       /* Mantém a cor do texto original */
         }
 
-        .product-card:hover { transform: translateY(-5px); }
+        .product-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
 
         .product-card img {
             width: 100%;
             height: 300px;
             object-fit: cover;
             display: block;
-            background-color: #eee; /* Cor de fundo enquanto carrega */
+            background-color: #eee;
         }
 
         .product-card h3 { padding: 15px 10px 5px; font-size: 16px; color: #333; }
@@ -123,55 +128,55 @@
 
 <main class="products">
     <div class="category shorts active">
-        <div class="product-card">
+        <a href="https://br.shein.com/pdsearch/shorts%20jeans/" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=500&q=80" alt="Short Jeans">
             <h3>Short Jeans Premium</h3>
             <p>R$ 79,90</p>
-        </div>
-        <div class="product-card">
+        </a>
+        <a href="https://br.shein.com/pdsearch/shorts%20moletom/" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1591195853730-410a6245d8b7?auto=format&fit=crop&w=500&q=80" alt="Short Moletom">
             <h3>Short Moletom Confort</h3>
             <p>R$ 59,90</p>
-        </div>
+        </a>
     </div>
 
     <div class="category calcas">
-        <div class="product-card">
+        <a href="https://br.shein.com/pdsearch/cal%C3%A7a%20jeans%20slim/" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=500&q=80" alt="Calça Jeans">
             <h3>Calça Jeans Slim</h3>
             <p>R$ 129,90</p>
-        </div>
-        <div class="product-card">
+        </a>
+        <a href="https://br.shein.com/pdsearch/cal%C3%A7a%20jogger/" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1624371414361-e6e8ea7c7526?auto=format&fit=crop&w=500&q=80" alt="Calça Jogger">
             <h3>Calça Jogger Urban</h3>
             <p>R$ 99,90</p>
-        </div>
+        </a>
     </div>
 
     <div class="category camisetas">
-        <div class="product-card">
+        <a href="https://br.shein.com/pdsearch/camiseta%20basica/" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=500&q=80" alt="Camiseta Branca">
             <h3>Camiseta Básica Cotton</h3>
             <p>R$ 49,90</p>
-        </div>
-        <div class="product-card">
+        </a>
+        <a href="https://br.shein.com/pdsearch/camiseta%20preta/" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=500&q=80" alt="Camiseta Preta">
             <h3>Camiseta Minimalist Black</h3>
             <p>R$ 59,90</p>
-        </div>
+        </a>
     </div>
 
     <div class="category acessorios">
-        <div class="product-card">
+        <a href="https://br.shein.com/pdsearch/corrente%20ouro/" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=500&q=80" alt="Corrente">
             <h3>Corrente de Ouro</h3>
             <p>R$ 159,90</p>
-        </div>
-        <div class="product-card">
+        </a>
+        <a href="https://br.shein.com/pdsearch/anel%20prata/" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80" alt="Anel">
             <h3>Anel de Prata</h3>
             <p>R$ 89,90</p>
-        </div>
+        </a>
     </div>
 </main>
 
@@ -183,23 +188,19 @@
     // Trocar Abas
     buttons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Remove a classe 'active' de todos os botões e adiciona no botão clicado
             buttons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            // Mostra a categoria correspondente e esconde as outras
             const catTarget = btn.dataset.category;
             categories.forEach(c => {
                 c.classList.toggle('active', c.classList.contains(catTarget));
             });
             
-            // Limpa a busca ao trocar de aba para mostrar todos os itens da nova categoria
             searchInput.value = "";
             resetSearch();
         });
     });
 
-    // Reseta a exibição de todos os produtos (coloca como block)
     function resetSearch() {
         document.querySelectorAll('.product-card').forEach(card => {
             card.style.display = 'block';
@@ -211,7 +212,6 @@
         const term = searchInput.value.toLowerCase();
 
         categories.forEach(cat => {
-            // Só filtra se a categoria estiver visível (active)
             if (cat.classList.contains('active')) {
                 const cards = cat.querySelectorAll('.product-card');
                 cards.forEach(card => {
