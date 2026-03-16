@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Usuários</title>
-    <style>
-        body { font-family: Arial, sans-serif; background:#f4f4f4; padding:20px; }
-        .cadastro { background:#fff; padding:20px; border-radius:10px; max-width:400px; margin: 20px auto; box-shadow:0 4px 15px rgba(0,0,0,0.05);}
-        input, button { width:100%; padding:10px; margin:10px 0; border-radius:5px; border:1px solid #ddd; }
-        button { background:#ff4081; color:#fff; border:none; cursor:pointer; font-weight:bold; transition:0.3s; }
-        button:hover { background:#e91e63; }
-        ul { list-style:none; padding-left:0; }
-        li { background:#f0f0f0; padding:8px 10px; margin-bottom:5px; border-radius:5px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro - Fashion Store</title>
+<style>
+    body { font-family: Arial, sans-serif; background:#f4f4f4; padding:20px; }
+    .cadastro { background:#fff; padding:20px; border-radius:10px; max-width:400px; margin: 20px auto; box-shadow:0 4px 15px rgba(0,0,0,0.05);}
+    input, button { width:100%; padding:10px; margin:10px 0; border-radius:5px; border:1px solid #ddd; }
+    button { background:#ff4081; color:#fff; border:none; cursor:pointer; font-weight:bold; transition:0.3s; }
+    button:hover { background:#e91e63; }
+    ul { list-style:none; padding-left:0; }
+    li { background:#f0f0f0; padding:8px 10px; margin-bottom:5px; border-radius:5px; }
+    .btn-abrir-site { background:#333; color:#fff; margin-top:10px; }
+    .btn-abrir-site:hover { background:#555; }
+</style>
 </head>
 <body>
 
@@ -24,44 +26,49 @@
 
     <h3>Usuários Cadastrados:</h3>
     <ul id="listaUsuarios"></ul>
+
+    <button class="btn-abrir-site" id="abrirSite">Ir para o Fashion Store</button>
 </div>
 
 <script>
-    const btnCadastrar = document.getElementById('btnCadastrar');
-    const inputNome = document.getElementById('nome');
-    const inputEmail = document.getElementById('email');
-    const listaUsuarios = document.getElementById('listaUsuarios');
+const btnCadastrar = document.getElementById('btnCadastrar');
+const inputNome = document.getElementById('nome');
+const inputEmail = document.getElementById('email');
+const listaUsuarios = document.getElementById('listaUsuarios');
+const abrirSite = document.getElementById('abrirSite');
 
-    let usuarios = []; // array que vai guardar os cadastros
+let usuarios = [];
 
-    btnCadastrar.addEventListener('click', () => {
-        const nome = inputNome.value.trim();
-        const email = inputEmail.value.trim();
+btnCadastrar.addEventListener('click', () => {
+    const nome = inputNome.value.trim();
+    const email = inputEmail.value.trim();
 
-        if(!nome || !email){
-            alert("Por favor, preencha nome e e-mail!");
-            return;
-        }
-
-        // adiciona ao array
-        usuarios.push({ nome, email });
-
-        // limpa os campos
-        inputNome.value = "";
-        inputEmail.value = "";
-
-        // atualiza a lista
-        atualizarLista();
-    });
-
-    function atualizarLista(){
-        listaUsuarios.innerHTML = "";
-        usuarios.forEach(u => {
-            const li = document.createElement("li");
-            li.textContent = `${u.nome} - ${u.email}`;
-            listaUsuarios.appendChild(li);
-        });
+    if(!nome || !email){
+        alert("Por favor, preencha nome e e-mail!");
+        return;
     }
+
+    usuarios.push({ nome, email });
+
+    inputNome.value = "";
+    inputEmail.value = "";
+
+    atualizarLista();
+});
+
+function atualizarLista(){
+    listaUsuarios.innerHTML = "";
+    usuarios.forEach((u, i) => {
+        const li = document.createElement("li");
+        li.textContent = `${i+1}. ${u.nome} - ${u.email}`;
+        listaUsuarios.appendChild(li);
+    });
+}
+
+// Botão para abrir o site Fashion Store
+abrirSite.addEventListener('click', () => {
+    window.location.href = "https://melodennis-droid.github.io/Dnzin/";
+});
 </script>
 
 </body>
