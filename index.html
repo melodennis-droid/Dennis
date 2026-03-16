@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Store - Nova Coleção</title>
     <style>
+        /* Manti seu estilo original e adicionei o estilo do botão de login */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
 
@@ -22,7 +23,20 @@
 
         header h1 { font-size: 22px; color: #ff4081; text-transform: uppercase; letter-spacing: 2px; }
 
-        nav { display: flex; gap: 10px; }
+        /* Estilo do novo botão de Login */
+        .login-btn {
+            background-color: #ff4081;
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .login-btn:hover { background-color: #e91e63; }
+
+        nav { display: flex; gap: 10px; margin-top: 10px; }
 
         nav button {
             background: #f0f0f0;
@@ -85,10 +99,11 @@
         .category.active { display: contents; }
 
         @media(max-width: 600px) {
-            header { flex-direction: column; padding: 15px; }
-            nav { margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+            header { flex-direction: column; padding: 15px; text-align: center; }
+            nav { margin-top: 15px; flex-wrap: wrap; justify-content: center; }
+            .login-btn { margin-top: 10px; width: 100%; text-align: center; }
             .products { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-            .product-card img { height: 200px; }
+            .product-card img { height: 180px; }
         }
     </style>
 </head>
@@ -96,6 +111,9 @@
 
 <header>
     <h1>Fashion Store</h1>
+    
+    <a href="https://melodennis-droid.github.io/Dnzin/" class="login-btn">Minha Conta / Cadastro</a>
+
     <nav>
         <button class="tab-btn active" data-category="shorts">Shorts</button>
         <button class="tab-btn" data-category="calcas">Calças</button>
@@ -128,11 +146,6 @@
             <h3>Calça Jeans Slim</h3>
             <p>R$ 139,90</p>
         </a>
-        <a href="https://www.lojasrenner.com.br/p/calca-jogger-esportiva-em-microfibra-pesada-com-bolsos/-/A-928229937-br.lr?sku=928473198" target="_blank" class="product-card">
-            <img src="https://images.unsplash.com/photo-1624371414361-e6e8ea7c7526?auto=format&fit=crop&w=500&q=80" alt="Calça Jogger">
-            <h3>Calça Jogger Urban</h3>
-            <p>R$ 99,90</p>
-        </a>
     </div>
 
     <div class="category camisetas">
@@ -141,11 +154,6 @@
             <h3>Camiseta Básica Cotton</h3>
             <p>R$ 89,99</p>
         </a>
-        <a href="https://www.lojasrenner.com.br/p/camiseta-comfort-em-algodao-com-estampa-mini-silk-minimalista/-/A-929862726-br.lr?sku=929862806" target="_blank" class="product-card">
-            <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=500&q=80" alt="Camiseta Preta">
-            <h3>Camiseta Minimalist Black</h3>
-            <p>R$ 59,90</p>
-        </a>
     </div>
 
     <div class="category acessorios">
@@ -153,11 +161,6 @@
             <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=500&q=80" alt="Corrente">
             <h3>Corrente de Ouro</h3>
             <p>R$ 82,20</p>
-        </a>
-        <a href="https://www.lojasrenner.com.br/p/kit-06-aneis-diversos/-/A-929473211-br.lr?sku=929473229" target="_blank" class="product-card">
-            <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=500&q=80" alt="Anel">
-            <h3>Anel de Prata</h3>
-            <p>R$ 29,90</p>
         </a>
     </div>
 </main>
