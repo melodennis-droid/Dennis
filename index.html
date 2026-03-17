@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Store - Nova Coleção</title>
     <style>
-        /* Manti seu estilo original e adicionei o estilo do botão de login */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
 
@@ -23,7 +22,6 @@
 
         header h1 { font-size: 22px; color: #ff4081; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* Estilo do novo botão de Login */
         .login-btn {
             background-color: #ff4081;
             color: white;
@@ -37,7 +35,6 @@
         .login-btn:hover { background-color: #e91e63; }
 
         nav { display: flex; gap: 10px; margin-top: 10px; }
-
         nav button {
             background: #f0f0f0;
             border: none;
@@ -49,7 +46,6 @@
             border-radius: 20px;
             font-weight: 600;
         }
-
         nav button.active { background-color: #ff4081; color: white; }
 
         .search-bar { margin: 25px auto; text-align: center; padding: 0 20px; }
@@ -111,9 +107,7 @@
 
 <header>
     <h1>Fashion Store</h1>
-    
     <a href="https://melodennis-droid.github.io/Dnzin/" class="login-btn">Minha Conta / Cadastro</a>
-
     <nav>
         <button class="tab-btn active" data-category="shorts">Shorts</button>
         <button class="tab-btn" data-category="calcas">Calças</button>
@@ -127,6 +121,8 @@
 </div>
 
 <main class="products">
+
+    <!-- Shorts -->
     <div class="category shorts active">
         <a href="https://www.lojasrenner.com.br/p/short-slim-cintura-medio-em-jeans-com-barra-desfiada/-/A-929599593-br.lr?sku=929599817" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=500&q=80" alt="Short Jeans">
@@ -138,70 +134,34 @@
             <h3>Short Moletom Confort</h3>
             <p>R$ 39,90</p>
         </a>
+        <a href="https://www.hering.com.br/short-jeans-masculino/p" target="_blank" class="product-card">
+            <img src="https://images.unsplash.com/photo-1616627561650-43c35f6a88cb?auto=format&fit=crop&w=500&q=80" alt="Short Jeans Hering">
+            <h3>Short Jeans Hering</h3>
+            <p>R$ 119,90</p>
+        </a>
     </div>
 
+    <!-- Calças -->
     <div class="category calcas">
         <a href="https://www.lojasrenner.com.br/p/calca-slim-cropped-em-jeans/-/A-929406982-br.lr?sku=929407045" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=500&q=80" alt="Calça Jeans">
             <h3>Calça Jeans Slim</h3>
             <p>R$ 139,90</p>
         </a>
+        <a href="https://www.hering.com.br/calca-moletom-masculina/p" target="_blank" class="product-card">
+            <img src="https://images.unsplash.com/photo-1600185361743-1b0031ad15c4?auto=format&fit=crop&w=500&q=80" alt="Calça Moletom">
+            <h3>Calça Moletom Hering</h3>
+            <p>R$ 99,90</p>
+        </a>
     </div>
 
+    <!-- Camisetas -->
     <div class="category camisetas">
         <a href="https://www.hering.com.br/camiseta-basica-masculina-comfort-super-cotton-0227n0a00s/p" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=500&q=80" alt="Camiseta Branca">
             <h3>Camiseta Básica Cotton</h3>
             <p>R$ 89,99</p>
         </a>
-    </div>
-
-    <div class="category acessorios">
-        <a href="https://www.lojasrenner.com.br/p/corrente-com-mini-elos-semijoia-banhada-a-ouro-18k-ania-store/-/A-7010703993878-br.lr?sku=7510708124099" target="_blank" class="product-card">
-            <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=500&q=80" alt="Corrente">
-            <h3>Corrente de Ouro</h3>
-            <p>R$ 82,20</p>
-        </a>
-    </div>
-</main>
-
-<script>
-    const buttons = document.querySelectorAll('.tab-btn');
-    const categories = document.querySelectorAll('.category');
-    const searchInput = document.getElementById('searchInput');
-
-    buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            buttons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const catTarget = btn.dataset.category;
-            categories.forEach(c => {
-                c.classList.toggle('active', c.classList.contains(catTarget));
-            });
-            searchInput.value = "";
-            resetSearch();
-        });
-    });
-
-    function resetSearch() {
-        document.querySelectorAll('.product-card').forEach(card => {
-            card.style.display = 'block';
-        });
-    }
-
-    searchInput.addEventListener('input', () => {
-        const term = searchInput.value.toLowerCase();
-        categories.forEach(cat => {
-            if (cat.classList.contains('active')) {
-                const cards = cat.querySelectorAll('.product-card');
-                cards.forEach(card => {
-                    const title = card.querySelector('h3').textContent.toLowerCase();
-                    card.style.display = title.includes(term) ? 'block' : 'none';
-                });
-            }
-        });
-    });
-</script>
-
-</body>
-</html>
+        <a href="https://www.lojasrenner.com.br/p/camiseta-regular-com-gola-v/-/A-929305678-br.lr?sku=929305700" target="_blank" class="product-card">
+            <img src="https://images.unsplash.com/photo-1616627561847-df8d91b0ec0b?auto=format&fit=crop&w=500&q=80" alt="Camiseta V">
+            <h3>Camiseta
