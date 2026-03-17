@@ -1,124 +1,119 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fashion Store - Nova Coleção</title>
-<style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Arial, sans-serif; }
-    body { background-color:#0000FF; color:#333; line-height:1.6; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Store - Nova Coleção</title>
+    <style>
+        /* Manti seu estilo original e adicionei o estilo do botão de login */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
 
-    header {
-        background-color:#fff;
-        position:sticky;
-        top:0;
-        z-index:1000;
-        box-shadow:0 2px 10px rgba(0,0,0,0.1);
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        padding:15px 5%;
-    }
+        header {
+            background-color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+        }
 
-    header h1 { font-size:22px; color:#ff4081; text-transform:uppercase; letter-spacing:2px; }
+        header h1 { font-size: 22px; color: #ff4081; text-transform: uppercase; letter-spacing: 2px; }
 
-    .login-btn {
-        background-color:#ff4081;
-        color:white;
-        text-decoration:none;
-        padding:8px 20px;
-        border-radius:20px;
-        font-weight:bold;
-        font-size:14px;
-        transition:0.3s;
-        cursor:pointer;
-    }
-    .login-btn:hover { background-color:#e91e63; }
+        /* Estilo do novo botão de Login */
+        .login-btn {
+            background-color: #ff4081;
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .login-btn:hover { background-color: #e91e63; }
 
-    nav { display:flex; gap:10px; margin-top:10px; }
-    nav button {
-        background:#f0f0f0;
-        border:none;
-        font-size:14px;
-        cursor:pointer;
-        padding:8px 15px;
-        transition:0.3s;
-        color:#666;
-        border-radius:20px;
-        font-weight:600;
-    }
-    nav button.active { background-color:#ff4081; color:white; }
+        nav { display: flex; gap: 10px; margin-top: 10px; }
 
-    .search-bar { margin:25px auto; text-align:center; padding:0 20px; }
-    .search-bar input {
-        width:100%;
-        max-width:500px;
-        padding:12px 25px;
-        border-radius:30px;
-        border:1px solid #ddd;
-        outline:none;
-    }
+        nav button {
+            background: #f0f0f0;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px 15px;
+            transition: 0.3s;
+            color: #666;
+            border-radius: 20px;
+            font-weight: 600;
+        }
 
-    .products {
-        display:grid;
-        grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
-        gap:25px;
-        padding:20px 5%;
-        max-width:1300px;
-        margin:0 auto;
-    }
+        nav button.active { background-color: #ff4081; color: white; }
 
-    .product-card {
-        background:#fff;
-        border-radius:15px;
-        overflow:hidden;
-        transition: transform 0.3s ease;
-        text-align:center;
-        box-shadow:0 4px 15px rgba(0,0,0,0.05);
-        display:block;
-        text-decoration:none;
-        color:inherit;
-    }
-    .product-card:hover { transform:translateY(-5px); box-shadow:0 8px 20px rgba(0,0,0,0.1); }
-    .product-card img { width:100%; height:300px; object-fit:cover; display:block; }
-    .product-card h3 { padding:15px 10px 5px; font-size:16px; }
-    .product-card p { color:#ff4081; font-weight:bold; padding-bottom:20px; font-size:18px; }
+        .search-bar { margin: 25px auto; text-align: center; padding: 0 20px; }
+        .search-bar input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 25px;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            outline: none;
+        }
 
-    .category { display:none; }
-    .category.active { display:contents; }
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+            padding: 20px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
 
-    /* Estilo do formulário de cadastro */
-    .cadastro {
-        background:#fff;
-        padding:20px;
-        border-radius:10px;
-        max-width:400px;
-        margin:20px auto;
-        box-shadow:0 4px 15px rgba(0,0,0,0.05);
-        text-align:center;
-    }
-    .cadastro input, .cadastro button { width:100%; padding:10px; margin:10px 0; border-radius:5px; border:1px solid #ddd; }
-    .cadastro button { background:#ff4081; color:#fff; border:none; cursor:pointer; font-weight:bold; transition:0.3s; }
-    .cadastro button:hover { background:#e91e63; }
-    .cadastro ul { list-style:none; padding-left:0; margin-top:15px; }
-    .cadastro li { background:#f0f0f0; padding:8px 10px; margin-bottom:5px; border-radius:5px; }
-    .btn-abrir-site { background:#333; color:#fff; margin-top:10px; }
-    .btn-abrir-site:hover { background:#555; }
+        .product-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
 
-    @media(max-width:600px){
-        header { flex-direction:column; padding:15px; text-align:center; }
-        nav { margin-top:15px; flex-wrap:wrap; justify-content:center; }
-        .products { grid-template-columns:repeat(2,1fr); gap:15px; }
-        .product-card img { height:180px; }
-    }
-</style>
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .product-card h3 { padding: 15px 10px 5px; font-size: 16px; }
+        .product-card p { color: #ff4081; font-weight: bold; padding-bottom: 20px; font-size: 18px; }
+
+        .category { display: none; }
+        .category.active { display: contents; }
+
+        @media(max-width: 600px) {
+            header { flex-direction: column; padding: 15px; text-align: center; }
+            nav { margin-top: 15px; flex-wrap: wrap; justify-content: center; }
+            .login-btn { margin-top: 10px; width: 100%; text-align: center; }
+            .products { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .product-card img { height: 180px; }
+        }
+    </style>
 </head>
 <body>
 
 <header>
     <h1>Fashion Store</h1>
-    <!-- O botão agora abre o formulário de cadastro na própria página -->
-    <button class="login-btn" id="abrirCadastro">Minha Conta / Cadastro</button>
+    
+    <a href="https://melodennis-droid.github.io/Dnzin/" class="login-btn">Minha Conta / Cadastro</a>
+
     <nav>
         <button class="tab-btn active" data-category="shorts">Shorts</button>
         <button class="tab-btn" data-category="calcas">Calças</button>
@@ -170,5 +165,43 @@
     </div>
 </main>
 
-<!-- Formulário de cadastro integrado -->
-<div
+<script>
+    const buttons = document.querySelectorAll('.tab-btn');
+    const categories = document.querySelectorAll('.category');
+    const searchInput = document.getElementById('searchInput');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const catTarget = btn.dataset.category;
+            categories.forEach(c => {
+                c.classList.toggle('active', c.classList.contains(catTarget));
+            });
+            searchInput.value = "";
+            resetSearch();
+        });
+    });
+
+    function resetSearch() {
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.style.display = 'block';
+        });
+    }
+
+    searchInput.addEventListener('input', () => {
+        const term = searchInput.value.toLowerCase();
+        categories.forEach(cat => {
+            if (cat.classList.contains('active')) {
+                const cards = cat.querySelectorAll('.product-card');
+                cards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    card.style.display = title.includes(term) ? 'block' : 'none';
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
