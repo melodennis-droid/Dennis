@@ -91,7 +91,9 @@
         .product-card h3 { padding: 15px 10px 5px; font-size: 16px; }
         .product-card p { color: #ff4081; font-weight: bold; padding-bottom: 20px; font-size: 18px; }
 
+        /* Esconde as categorias inativas */
         .category { display: none; }
+        /* Mostra apenas a categoria ativa no grid */
         .category.active { display: contents; }
 
         @media(max-width: 600px) {
@@ -121,8 +123,6 @@
 </div>
 
 <main class="products">
-
-    <!-- Shorts -->
     <div class="category shorts active">
         <a href="https://www.lojasrenner.com.br/p/short-slim-cintura-medio-em-jeans-com-barra-desfiada/-/A-929599593-br.lr?sku=929599817" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=500&q=80" alt="Short Jeans">
@@ -134,35 +134,66 @@
             <h3>Short Moletom Confort</h3>
             <p>R$ 39,90</p>
         </a>
-        <a href="https://www.hering.com.br/short-jeans-masculino/p" target="_blank" class="product-card">
-            <img src="https://images.unsplash.com/photo-1616627561650-43c35f6a88cb?auto=format&fit=crop&w=500&q=80" alt="Short Jeans Hering">
-            <h3>Short Jeans Hering</h3>
-            <p>R$ 119,90</p>
-        </a>
     </div>
 
-    <!-- Calças -->
     <div class="category calcas">
         <a href="https://www.lojasrenner.com.br/p/calca-slim-cropped-em-jeans/-/A-929406982-br.lr?sku=929407045" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=500&q=80" alt="Calça Jeans">
             <h3>Calça Jeans Slim</h3>
             <p>R$ 139,90</p>
         </a>
-        <a href="https://www.hering.com.br/calca-moletom-masculina/p" target="_blank" class="product-card">
-            <img src="https://images.unsplash.com/photo-1600185361743-1b0031ad15c4?auto=format&fit=crop&w=500&q=80" alt="Calça Moletom">
-            <h3>Calça Moletom Hering</h3>
-            <p>R$ 99,90</p>
-        </a>
     </div>
 
-    <!-- Camisetas -->
     <div class="category camisetas">
         <a href="https://www.hering.com.br/camiseta-basica-masculina-comfort-super-cotton-0227n0a00s/p" target="_blank" class="product-card">
             <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=500&q=80" alt="Camiseta Branca">
             <h3>Camiseta Básica Cotton</h3>
             <p>R$ 89,99</p>
         </a>
-        <a href="https://www.lojasrenner.com.br/p/camiseta-regular-com-gola-v/-/A-929305678-br.lr?sku=929305700" target="_blank" class="product-card">
-            <img src="https://images.unsplash.com/photo-1616627561847-df8d91b0ec0b?auto=format&fit=crop&w=500&q=80" alt="Camiseta V">
-            <h3>Camiseta Gola V</h3>
-            <p>R$ 79,90
+    </div>
+
+    <div class="category acessorios">
+        <p style="grid-column: 1/-1; padding: 20px;">Nenhum acessório disponível no momento.</p>
+    </div>
+</main>
+
+<script>
+    // Seleciona todos os botões e todas as seções de categoria
+    const buttons = document.querySelectorAll('.tab-btn');
+    const categories = document.querySelectorAll('.category');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const categoryToOpen = button.getAttribute('data-category');
+
+            // 1. Remove a classe 'active' de todos os botões
+            buttons.forEach(btn => btn.classList.remove('active'));
+            // 2. Adiciona a classe 'active' apenas no botão clicado
+            button.classList.add('active');
+
+            // 3. Esconde todas as categorias
+            categories.forEach(cat => cat.classList.remove('active'));
+            // 4. Mostra apenas a categoria correspondente ao botão
+            document.querySelector(`.category.${categoryToOpen}`).classList.add('active');
+        });
+    });
+
+    // Função simples de busca (opcional, já que você tem o input)
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        const productCards = document.querySelectorAll('.product-card');
+
+        productCards.forEach(card => {
+            const title = card.querySelector('h3').innerText.toLowerCase();
+            if(title.includes(term)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
