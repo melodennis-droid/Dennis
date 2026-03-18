@@ -6,24 +6,29 @@
     <title>Fashion Store - Nova Coleção</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background-color: #f4f4f4; color: #333; line-height: 1.6; }
+        
+        /* Fundo preto e texto claro */
+        body { background-color: #0a0a0a; color: #f0f0f0; line-height: 1.6; }
 
         header {
-            background-color: #fff;
+            background-color: #000; /* Cabeçalho totalmente preto */
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.8);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 5%;
+            border-bottom: 1px solid #222;
         }
 
-        header h1 { font-size: 22px; color: #ff4081; text-transform: uppercase; letter-spacing: 2px; }
+        /* Título em azul */
+        header h1 { font-size: 22px; color: #007bff; text-transform: uppercase; letter-spacing: 2px; }
 
+        /* Botão principal em azul */
         .login-btn {
-            background-color: #ff4081;
+            background-color: #007bff;
             color: white;
             text-decoration: none;
             padding: 8px 20px;
@@ -32,21 +37,23 @@
             font-size: 14px;
             transition: 0.3s;
         }
-        .login-btn:hover { background-color: #e91e63; }
+        /* Hover azul escuro */
+        .login-btn:hover { background-color: #0056b3; }
 
         nav { display: flex; gap: 10px; margin-top: 10px; }
         nav button {
-            background: #f0f0f0;
+            background: #222; /* Fundo do botão inativo escuro */
             border: none;
             font-size: 14px;
             cursor: pointer;
             padding: 8px 15px;
             transition: 0.3s;
-            color: #666;
+            color: #aaa;
             border-radius: 20px;
             font-weight: 600;
         }
-        nav button.active { background-color: #ff4081; color: white; }
+        nav button:hover { background-color: #333; color: #fff; }
+        nav button.active { background-color: #007bff; color: white; }
 
         .search-bar { margin: 25px auto; text-align: center; padding: 0 20px; }
         .search-bar input {
@@ -54,8 +61,15 @@
             max-width: 500px;
             padding: 12px 25px;
             border-radius: 30px;
-            border: 1px solid #ddd;
+            background-color: #111; /* Barra de pesquisa escura */
+            color: #fff;
+            border: 1px solid #333;
             outline: none;
+            transition: 0.3s;
+        }
+        .search-bar input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
         }
 
         .products {
@@ -68,28 +82,40 @@
         }
 
         .product-card {
-            background: #fff;
+            background: #111; /* Card do produto escuro */
             border-radius: 15px;
             overflow: hidden;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             display: block;
             text-decoration: none;
             color: inherit;
+            border: 1px solid #222;
         }
 
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        /* Efeito hover no produto com brilho azul */
+        .product-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.15); 
+            border-color: #007bff;
+        }
 
         .product-card img {
             width: 100%;
             height: 300px;
             object-fit: cover;
             display: block;
+            opacity: 0.9;
+            transition: opacity 0.3s;
         }
+        
+        .product-card:hover img { opacity: 1; }
 
-        .product-card h3 { padding: 15px 10px 5px; font-size: 16px; }
-        .product-card p { color: #ff4081; font-weight: bold; padding-bottom: 20px; font-size: 18px; }
+        .product-card h3 { padding: 15px 10px 5px; font-size: 16px; color: #fff; }
+        
+        /* Preço em azul */
+        .product-card p { color: #007bff; font-weight: bold; padding-bottom: 20px; font-size: 18px; }
 
         .category { display: none; }
         .category.active { display: contents; }
@@ -151,18 +177,18 @@
     </div>
 
     <div class="category acessorios">
-        <a href="https://pt.aliexpress.com/item/1005005056828824.html?spm=a2g0o.productlist.main.3.9125536d8Li1mn&algo_pvid=1869af78-d1df-45e8-b513-1296d26d2d0a&algo_exp_id=1869af78-d1df-45e8-b513-1296d26d2d0a-2&pdp_ext_f=%7B%22order%22%3A%225130%22%2C%22spu_best_type%22%3A%22price%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21BRL%219.64%216.99%21%21%211.71%211.24%21%402103122117738339493185960e6142%2112000031476679296%21sea%21BR%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A32d6c0c%3Bm03_new_user%3A-29895%3BpisId%3A5000000198346565&curPageLogUid=CVtS56DkCcCO&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005005056828824%7C_p_origin_prod%3A" target="_blank" class="product-card">
-            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S22c63b937eaa47049da3b0085af7356bw.jpg_220x220q75.jpg_.avif" alt="Corrente de Ouro">
+        <a href="https://pt.aliexpress.com/item/1005005056828824.html" target="_blank" class="product-card">
+            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S22c63b937eaa47049da3b0085af7356bw.jpg_220x220q75.jpg_.avif" alt="Aneis y2k">
             <h3>Aneis y2k</h3>
             <p>R$ 6,99</p>
         </a>
-        <a href="https://pt.aliexpress.com/item/1005007936172376.html?spm=a2g0o.productlist.main.8.65487722Sy6dwv&aem_p4p_detail=202603180431151804237294880160000500634&algo_pvid=426ddb62-8a1b-4831-8f1d-71593d793301&algo_exp_id=426ddb62-8a1b-4831-8f1d-71593d793301-7&pdp_ext_f=%7B%22order%22%3A%2283%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21BRL%219.24%216.99%21%21%211.64%211.24%21%402101e80317738334752988070e251d%2112000044722579165%21sea%21BR%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A32d6c0c%3Bm03_new_user%3A-29895%3BpisId%3A5000000197837493&curPageLogUid=rX2rjOtuUpfr&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005007936172376%7C_p_origin_prod%3A&search_p4p_id=202603180431151804237294880160000500634_2" target="_blank" class="product-card">
-            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S478e40cd337f4394ac04d5c9c20132f8N.jpg_220x220q75.jpg_.avif" alt="Anéis">
-            <h3>corrente y2k</h3>
+        <a href="https://pt.aliexpress.com/item/1005007936172376.html" target="_blank" class="product-card">
+            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S478e40cd337f4394ac04d5c9c20132f8N.jpg_220x220q75.jpg_.avif" alt="Corrente y2k">
+            <h3>Corrente y2k</h3>
             <p>R$ 6,99</p>
         </a>
-        <a href="https://pt.aliexpress.com/item/1005011780762243.html?spm=a2g0o.productlist.main.12.257313b2GoTelH&aem_p4p_detail=20260318044214388737170958880000517173&algo_pvid=aa29630f-48cf-4819-bdf9-856ce5b6e1c5&algo_exp_id=aa29630f-48cf-4819-bdf9-856ce5b6e1c5-11&pdp_ext_f=%7B%22order%22%3A%221%22%2C%22spu_best_type%22%3A%22price%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21BRL%21124.63%2153.59%21%21%21152.14%2165.42%21%402103128917738341340772029edbcf%2112000056535258119%21sea%21BR%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A32d6c0c%3Bm03_new_user%3A-29895&curPageLogUid=POJjU3Fn0f19&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005011780762243%7C_p_origin_prod%3A&search_p4p_id=20260318044214388737170958880000517173_3" target="_blank" class="product-card">
-            <img src="https://ae-pic-a1.aliexpress-media.com/kf/Sd837a8b782be4f3d83531c173858456f8.jpg_220x220q75.jpg_.avif" alt="Relógio Gold">
+        <a href="https://pt.aliexpress.com/item/1005011780762243.html" target="_blank" class="product-card">
+            <img src="https://ae-pic-a1.aliexpress-media.com/kf/Sd837a8b782be4f3d83531c173858456f8.jpg_220x220q75.jpg_.avif" alt="Pulseira trevor">
             <h3>Pulseira trevor</h3>
             <p>R$ 53,59</p>
         </a>
