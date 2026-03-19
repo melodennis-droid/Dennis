@@ -4,7 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Store - Nova Coleção</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        
+        /* Fundo preto e texto claro */
+        body { background-color: #0a0a0a; color: #f0f0f0; line-height: 1.6; }
+
+        header {
+            background-color: #000; /* Cabeçalho totalmente preto */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            border-bottom: 1px solid #222;
+        }
+
+        /* Título em vermelho */
+        header h1 { font-size: 22px; color: #ff3b3b; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Botão principal em vermelho */
+        .login-btn {
+            background-color: #ff3b3b;
+            color: white;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        /* Hover vermelho escuro */
+        .login-btn:hover { background-color: #d32f2f; }
+
+        nav { display: flex; gap: 10px; margin-top: 10px; }
+        nav button {
+            background: #222; /* Fundo do botão inativo escuro */
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px 15px;
+            transition: 0.3s;
+            color: #aaa;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        nav button:hover { background-color: #333; color: #fff; }
+        nav button.active { background-color: #ff3b3b; color: white; }
+
+        .search-bar { margin: 25px auto; text-align: center; padding: 0 20px; }
+        .search-bar input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 25px;
+            border-radius: 30px;
+            background-color: #111; /* Barra de pesquisa escura */
+            color: #fff;
+            border: 1px solid #333;
+            outline: none;
+            transition: 0.3s;
+        }
+        .search-bar input:focus {
+            border-color: #ff3b3b;
+            box-shadow: 0 0 8px rgba(255, 59, 59, 0.3);
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+            padding: 20px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: #111; /* Card do produto escuro */
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid #222;
+        }
+
+        /* Efeito hover no produto com brilho vermelho */
+        .product-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 20px rgba(255, 59, 59, 0.15); 
+            border-color: #ff3b3b;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+        
+        .product-card:hover img { opacity: 1; }
+
+        .product-card h3 { padding: 15px 10px 5px; font-size: 16px; color: #fff; }
+        
+        /* Preço em vermelho */
+        .product-card p { color: #ff3b3b; font-weight: bold; padding-bottom: 20px; font-size: 18px; }
+
+        .category { display: none; }
+        .category.active { display: contents; }
+
+        @media(max-width: 600px) {
+            header { flex-direction: column; padding: 15px; text-align: center; }
+            nav { margin-top: 15px; flex-wrap: wrap; justify-content: center; }
+            .login-btn { margin-top: 10px; width: 100%; text-align: center; }
+            .products { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .product-card img { height: 180px; }
+        }
+    </style>
 </head>
 <body>
 
@@ -30,15 +153,15 @@
             <h3>Jorts</h3>
             <p>R$ 139,90</p>
         </a>
-        <a href="https://pt.aliexpress.com/item/1005007586950012.html" target="_blank" class="product-card">
+        <a href="https://pt.aliexpress.com/item/1005007586950012.html?spm=a2g0o.productlist.main.1.597fJ5BpJ5BpjH&algo_pvid=0ad33917-63b3-4ff1-b5a0-d6ec4ff5a5b5&algo_exp_id=0ad33917-63b3-4ff1-b5a0-d6ec4ff5a5b5-0&pdp_ext_f=%7B%22order%22%3A%2223032%22%2C%22spu_best_type%22%3A%22price%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21BRL%2126.71%216.99%21%21%2132.60%218.53%21%402103212317738360621726591e9199%2112000041400442094%21sea%21BR%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A32d6c0c%3Bm03_new_user%3A-29895%3BpisId%3A5000000197837493&curPageLogUid=H9EHy8Pd45G1&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005007586950012%7C_p_origin_prod%3A" target="_blank" class="product-card">
             <img src="https://ae-pic-a1.aliexpress-media.com/kf/S823909841f4245538e8fd2f007d2b193B.jpg_220x220q75.jpg_.avif" alt="Short Moletom">
-            <h3>Shorts de Verão</h3>
+            <h3>Shorts Masculinos de Verão em Seda Gelada para Corrida e Academia</h3>
             <p>R$ 39,90</p>
         </a>
     </div>
 
     <div class="category calcas">
-        <a href="https://pt.aliexpress.com/item/1005009202854463.html" target="_blank" class="product-card">
+        <a href="https://pt.aliexpress.com/item/1005009202854463.html?spm=a2g0o.productlist.seoads.1.4a98r1ARr1ARdC&p4p_pvid=202603180456268356140223851420000064808_1&_gl=1*1myet6f*_gcl_au*MTc0Mjk1NzI2NS4xNzczODMzNDY3*_ga*MTI3MDkzOTE2Ny4xNzczODMzNDY3*_ga_VED1YSGNC7*czE3NzM4MzM0NjYkbzEkZzEkdDE3NzM4MzUwNTIkajYwJGwwJGgw&gatewayAdapt=glo2bra" target="_blank" class="product-card">
             <img src="https://ae-pic-a1.aliexpress-media.com/kf/S982def9dc4234cb4a57589d190420ad6t.jpg_220x220q75.jpg_.avif" alt="Calça Jeans">
             <h3>Calça baggy</h3>
             <p>R$ 70,49</p>
@@ -46,9 +169,9 @@
     </div>
 
     <div class="category camisetas">
-        <a href="https://pt.aliexpress.com/item/1005008219097903.html" target="_blank" class="product-card">
+        <a href="https://pt.aliexpress.com/item/1005008219097903.html?spm=a2g0o.productlist.main.1.122617fartc37P&algo_pvid=46a99e0e-80a7-4f32-bcaa-5e2f20e1d155&algo_exp_id=46a99e0e-80a7-4f32-bcaa-5e2f20e1d155-0&pdp_ext_f=%7B%22order%22%3A%222301%22%2C%22spu_best_type%22%3A%22price%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21BRL%21200.20%21112.11%21%21%21244.39%21136.86%21%402103122117738365814576652e614d%2112000044275967272%21sea%21BR%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A32d6c0c%3Bm03_new_user%3A-29895&curPageLogUid=3F9oqAJiiFYd&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008219097903%7C_p_origin_prod%3A" target="_blank" class="product-card">
             <img src="https://ae-pic-a1.aliexpress-media.com/kf/Sd1398b2ae44e43f2b669052171448944o.jpg?has_lang=1&ver=2_220x220q75.jpg_.avif" alt="Camiseta Branca">
-            <h3>Camisa polo américa retro</h3>
+            <h3>Camisa polo assombrada américa retro</h3>
             <p>R$ 112,11</p>
         </a>
     </div>
@@ -72,7 +195,35 @@
     </div>
 </main>
 
-<script src="script.js"></script>
+<script>
+    const buttons = document.querySelectorAll('.tab-btn');
+    const categories = document.querySelectorAll('.category');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            const categoryToOpen = button.getAttribute('data-category');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            categories.forEach(cat => cat.classList.remove('active'));
+            document.querySelector(`.category.${categoryToOpen}`).classList.add('active');
+        });
+    });
+
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        const productCards = document.querySelectorAll('.product-card');
+
+        productCards.forEach(card => {
+            const title = card.querySelector('h3').innerText.toLowerCase();
+            if(title.includes(term)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
