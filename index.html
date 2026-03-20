@@ -5,30 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Store - Nova Coleção</title>
     <style>
+        /* 1. VARIÁVEIS CSS (Cores do Modo Escuro - Padrão) */
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #f0f0f0;
+            --header-bg: #000000;
+            --element-bg: #111111; /* cards e input */
+            --border-color: #222222;
+            --btn-inactive: #222222;
+            --btn-hover: #333333;
+            --accent-color: #ff3b3b;
+            --accent-hover: #d32f2f;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --header-shadow: rgba(0, 0, 0, 0.8);
+        }
+
+        /* 2. CORES DO MODO CLARO (Ativadas via classe no body) */
+        body.light-mode {
+            --bg-color: #f4f4f5;
+            --text-color: #1a1a1a;
+            --header-bg: #ffffff;
+            --element-bg: #ffffff;
+            --border-color: #dddddd;
+            --btn-inactive: #e0e0e0;
+            --btn-hover: #cccccc;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --header-shadow: rgba(0, 0, 0, 0.1);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
         
-        /* Fundo preto e texto claro */
-        body { background-color: #0a0a0a; color: #f0f0f0; line-height: 1.6; }
+        /* Aplicando as variáveis nas regras de CSS */
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            line-height: 1.6; 
+            transition: background-color 0.3s, color 0.3s; /* Transição suave */
+        }
 
         header {
-            background-color: #000; /* Cabeçalho totalmente preto */
+            background-color: var(--header-bg);
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            box-shadow: 0 2px 10px var(--header-shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 5%;
-            border-bottom: 1px solid #222;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s, box-shadow 0.3s, border-color 0.3s;
         }
 
-        /* Título em vermelho */
-        header h1 { font-size: 22px; color: #ff3b3b; text-transform: uppercase; letter-spacing: 2px; }
+        header h1 { font-size: 22px; color: var(--accent-color); text-transform: uppercase; letter-spacing: 2px; }
 
-        /* Botão principal em vermelho */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Botão de trocar tema */
+        #themeToggle {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: transform 0.3s;
+        }
+        #themeToggle:hover { transform: scale(1.1); }
+
         .login-btn {
-            background-color: #ff3b3b;
+            background-color: var(--accent-color);
             color: white;
             text-decoration: none;
             padding: 8px 20px;
@@ -37,23 +86,22 @@
             font-size: 14px;
             transition: 0.3s;
         }
-        /* Hover vermelho escuro */
-        .login-btn:hover { background-color: #d32f2f; }
+        .login-btn:hover { background-color: var(--accent-hover); }
 
         nav { display: flex; gap: 10px; margin-top: 10px; }
         nav button {
-            background: #222; /* Fundo do botão inativo escuro */
+            background: var(--btn-inactive);
             border: none;
             font-size: 14px;
             cursor: pointer;
             padding: 8px 15px;
             transition: 0.3s;
-            color: #aaa;
+            color: var(--text-color);
             border-radius: 20px;
             font-weight: 600;
         }
-        nav button:hover { background-color: #333; color: #fff; }
-        nav button.active { background-color: #ff3b3b; color: white; }
+        nav button:hover { background-color: var(--btn-hover); }
+        nav button.active { background-color: var(--accent-color); color: white; }
 
         .search-bar { margin: 25px auto; text-align: center; padding: 0 20px; }
         .search-bar input {
@@ -61,14 +109,14 @@
             max-width: 500px;
             padding: 12px 25px;
             border-radius: 30px;
-            background-color: #111; /* Barra de pesquisa escura */
-            color: #fff;
-            border: 1px solid #333;
+            background-color: var(--element-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
             outline: none;
             transition: 0.3s;
         }
         .search-bar input:focus {
-            border-color: #ff3b3b;
+            border-color: var(--accent-color);
             box-shadow: 0 0 8px rgba(255, 59, 59, 0.3);
         }
 
@@ -82,23 +130,22 @@
         }
 
         .product-card {
-            background: #111; /* Card do produto escuro */
+            background: var(--element-bg);
             border-radius: 15px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 15px var(--shadow-color);
             display: block;
             text-decoration: none;
             color: inherit;
-            border: 1px solid #222;
+            border: 1px solid var(--border-color);
         }
 
-        /* Efeito hover no produto com brilho vermelho */
         .product-card:hover { 
             transform: translateY(-5px); 
             box-shadow: 0 8px 20px rgba(255, 59, 59, 0.15); 
-            border-color: #ff3b3b;
+            border-color: var(--accent-color);
         }
 
         .product-card img {
@@ -111,19 +158,17 @@
         }
         
         .product-card:hover img { opacity: 1; }
-
-        .product-card h3 { padding: 15px 10px 5px; font-size: 16px; color: #fff; }
-        
-        /* Preço em vermelho */
-        .product-card p { color: #ff3b3b; font-weight: bold; padding-bottom: 20px; font-size: 18px; }
+        .product-card h3 { padding: 15px 10px 5px; font-size: 16px; color: var(--text-color); }
+        .product-card p { color: var(--accent-color); font-weight: bold; padding-bottom: 20px; font-size: 18px; }
 
         .category { display: none; }
         .category.active { display: contents; }
 
         @media(max-width: 600px) {
             header { flex-direction: column; padding: 15px; text-align: center; }
+            .header-actions { margin-top: 15px; width: 100%; justify-content: space-between; }
             nav { margin-top: 15px; flex-wrap: wrap; justify-content: center; }
-            .login-btn { margin-top: 10px; width: 100%; text-align: center; }
+            .login-btn { width: auto; flex-grow: 1; text-align: center; }
             .products { grid-template-columns: repeat(2, 1fr); gap: 15px; }
             .product-card img { height: 180px; }
         }
@@ -133,7 +178,12 @@
 
 <header>
     <h1>Fashion Store</h1>
-    <a href="https://melodennis-droid.github.io/Dnzin/" class="login-btn">Minha Conta / Cadastro</a>
+    
+    <div class="header-actions">
+        <button id="themeToggle" aria-label="Alternar Tema">☀️</button>
+        <a href="https://melodennis-droid.github.io/Dnzin/" class="login-btn">Minha Conta / Cadastro</a>
+    </div>
+
     <nav>
         <button class="tab-btn active" data-category="shorts">Shorts</button>
         <button class="tab-btn" data-category="calcas">Calças</button>
@@ -155,7 +205,7 @@
         </a>
         <a href="https://pt.aliexpress.com/item/1005007586950012.html?spm=a2g0o.productlist.main.1.597fJ5BpJ5BpjH&algo_pvid=0ad33917-63b3-4ff1-b5a0-d6ec4ff5a5b5&algo_exp_id=0ad33917-63b3-4ff1-b5a0-d6ec4ff5a5b5-0&pdp_ext_f=%7B%22order%22%3A%2223032%22%2C%22spu_best_type%22%3A%22price%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21BRL%2126.71%216.99%21%21%2132.60%218.53%21%402103212317738360621726591e9199%2112000041400442094%21sea%21BR%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A32d6c0c%3Bm03_new_user%3A-29895%3BpisId%3A5000000197837493&curPageLogUid=H9EHy8Pd45G1&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005007586950012%7C_p_origin_prod%3A" target="_blank" class="product-card">
             <img src="https://ae-pic-a1.aliexpress-media.com/kf/S823909841f4245538e8fd2f007d2b193B.jpg_220x220q75.jpg_.avif" alt="Short Moletom">
-            <h3>Shorts Masculinos de Verão em Seda Gelada para Corrida e Academia</h3>
+            <h3>Shorts Masculinos de Verão</h3>
             <p>R$ 39,90</p>
         </a>
     </div>
@@ -196,6 +246,33 @@
 </main>
 
 <script>
+    // --- LÓGICA DO TEMA CLARO/ESCURO ---
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const body = document.body;
+
+    // Verifica no localStorage se o usuário já havia escolhido o tema claro antes
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme === 'light') {
+        body.classList.add('light-mode');
+        themeToggleBtn.innerText = '🌙'; // Muda o ícone para lua
+    }
+
+    // Função que roda ao clicar no botão
+    themeToggleBtn.addEventListener('click', () => {
+        body.classList.toggle('light-mode');
+        
+        // Se o body agora tem a classe light-mode, salvamos isso e mudamos o ícone
+        if (body.classList.contains('light-mode')) {
+            localStorage.setItem('theme', 'light');
+            themeToggleBtn.innerText = '🌙'; 
+        } else {
+            // Se voltou pro escuro, limpamos o localStorage e mudamos pro sol
+            localStorage.setItem('theme', 'dark');
+            themeToggleBtn.innerText = '☀️';
+        }
+    });
+
+    // --- LÓGICA DAS ABAS DE CATEGORIAS ---
     const buttons = document.querySelectorAll('.tab-btn');
     const categories = document.querySelectorAll('.category');
 
@@ -209,14 +286,18 @@
         });
     });
 
+    // --- LÓGICA DA BARRA DE BUSCA ---
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase();
+        // Em vez de buscar só na categoria ativa, busca em todos os cards e muda o display
         const productCards = document.querySelectorAll('.product-card');
 
         productCards.forEach(card => {
             const title = card.querySelector('h3').innerText.toLowerCase();
             if(title.includes(term)) {
+                // Ao invés de usar block, use flex ou o valor original se necessário. 
+                // Aqui block já atende porque o "a" nativamente suporta.
                 card.style.display = "block";
             } else {
                 card.style.display = "none";
