@@ -150,7 +150,6 @@
             font-weight: bold;
         }
 
-        /* SIDEBAR CARRINHO */
         #cartSidebar {
             position: fixed;
             top: 0;
@@ -222,6 +221,7 @@
     <button class="tab-btn" data-category="calcas">Calças</button>
     <button class="tab-btn" data-category="camisetas">Camisetas</button>
     <button class="tab-btn" data-category="acessorios">Acessórios</button>
+    <button class="tab-btn" data-category="tenis">Tênis</button>
 </nav>
 
 <div class="search-bar">
@@ -253,17 +253,6 @@
                 </div>
             </div>
         </div>
-        <div class="product-card" data-name="Shorts Verão" data-price="39.90" data-url="https://pt.aliexpress.com/item/1005007586950012.html">
-            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S823909841f4245538e8fd2f007d2b193B.jpg_220x220q75.jpg_.avif" alt="Shorts">
-            <div class="card-content">
-                <h3>Shorts Verão</h3>
-                <span class="price">R$ 39,90</span>
-                <div class="btn-group">
-                    <a href="https://pt.aliexpress.com/item/1005007586950012.html" target="_blank" class="btn-link">Ver na Loja</a>
-                    <button class="add-to-cart">Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="category calcas">
@@ -274,6 +263,44 @@
                 <span class="price">R$ 70,49</span>
                 <div class="btn-group">
                     <a href="https://pt.aliexpress.com/item/1005009202854463.html" target="_blank" class="btn-link">Ver na Loja</a>
+                    <button class="add-to-cart">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="category tenis">
+        <div class="product-card" data-name="Nike Air Force 1" data-price="799.90" data-url="https://www.nike.com.br/tenis-nike-air-force-1-07-masculino-153-169-171-229279">
+            <img src="https://imgnike-a.akamaihd.net/1300x1300/011117A1.jpg" alt="Nike AF1">
+            <div class="card-content">
+                <h3>Nike Air Force 1</h3>
+                <span class="price">R$ 799,90</span>
+                <div class="btn-group">
+                    <a href="#" target="_blank" class="btn-link">Ver na Loja</a>
+                    <button class="add-to-cart">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card" data-name="Adidas Forum Low" data-price="599.90" data-url="#">
+            <img src="https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/01f14379e43046738914ad3e01108269_9366/Tenis_Forum_Low_Branco_FY7755_01_standard.jpg" alt="Adidas Forum">
+            <div class="card-content">
+                <h3>Adidas Forum Low</h3>
+                <span class="price">R$ 599,90</span>
+                <div class="btn-group">
+                    <a href="#" target="_blank" class="btn-link">Ver na Loja</a>
+                    <button class="add-to-cart">Adicionar ao Carrinho</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card" data-name="New Balance 550" data-price="849.90" data-url="#">
+            <img src="https://images.tcdn.com.br/img/img_prod/1049900/tenis_new_balance_550_masculino_branco_e_preto_4381_1_270725a3d463be49b9991277a0670094.jpg" alt="NB 550">
+            <div class="card-content">
+                <h3>New Balance 550</h3>
+                <span class="price">R$ 849,90</span>
+                <div class="btn-group">
+                    <a href="#" target="_blank" class="btn-link">Ver na Loja</a>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
             </div>
@@ -328,7 +355,7 @@
         };
     });
 
-    // --- CARRINHO ATUALIZADO ---
+    // Carrinho
     let cart = [];
     const sidebar = document.getElementById('cartSidebar');
     const itemsContainer = document.getElementById('cartItems');
@@ -338,7 +365,6 @@
     document.querySelectorAll('.add-to-cart').forEach(btn => {
         btn.onclick = (e) => {
             const card = e.target.closest('.product-card');
-            // Agora salvamos também a URL (data-url)
             cart.push({
                 name: card.dataset.name,
                 price: parseFloat(card.dataset.price),
