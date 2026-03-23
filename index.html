@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Store - Nova Coleção</title>
     <style>
-        /* 1. VARIÁVEIS CSS (Cores do Modo Escuro - Padrão) */
+        /* 1. VARIÁVEIS CSS */
         :root {
             --bg-color: #0a0a0a;
             --text-color: #f0f0f0;
             --header-bg: #000000;
-            --element-bg: #111111; /* cards e input */
+            --element-bg: #111111;
             --border-color: #222222;
             --btn-inactive: #222222;
             --btn-hover: #333333;
@@ -18,9 +18,9 @@
             --accent-hover: #d32f2f;
             --shadow-color: rgba(0, 0, 0, 0.5);
             --header-shadow: rgba(0, 0, 0, 0.8);
+            --cart-bg: #1a1a1a;
         }
 
-        /* 2. CORES DO MODO CLARO (Ativadas via classe no body) */
         body.light-mode {
             --bg-color: #f4f4f5;
             --text-color: #1a1a1a;
@@ -31,16 +31,17 @@
             --btn-hover: #cccccc;
             --shadow-color: rgba(0, 0, 0, 0.1);
             --header-shadow: rgba(0, 0, 0, 0.1);
+            --cart-bg: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
         
-        /* Aplicando as variáveis nas regras de CSS */
         body { 
             background-color: var(--bg-color); 
             color: var(--text-color); 
             line-height: 1.6; 
-            transition: background-color 0.3s, color 0.3s; /* Transição suave */
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
         }
 
         header {
@@ -54,27 +55,34 @@
             align-items: center;
             padding: 15px 5%;
             border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.3s, box-shadow 0.3s, border-color 0.3s;
         }
 
         header h1 { font-size: 22px; color: var(--accent-color); text-transform: uppercase; letter-spacing: 2px; }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+        .header-actions { display: flex; align-items: center; gap: 15px; }
 
-        /* Botão de trocar tema */
-        #themeToggle {
+        #themeToggle, #cartToggle {
             background: none;
             border: none;
             font-size: 24px;
             cursor: pointer;
             color: var(--text-color);
             transition: transform 0.3s;
+            position: relative;
         }
-        #themeToggle:hover { transform: scale(1.1); }
+
+        /* Contador de itens no carrinho */
+        #cartCount {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent-color);
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-weight: bold;
+        }
 
         .login-btn {
             background-color: var(--accent-color);
@@ -84,23 +92,19 @@
             border-radius: 20px;
             font-weight: bold;
             font-size: 14px;
-            transition: 0.3s;
         }
-        .login-btn:hover { background-color: var(--accent-hover); }
 
-        nav { display: flex; gap: 10px; margin-top: 10px; }
+        nav { display: flex; gap: 10px; margin-top: 10px; justify-content: center; padding: 10px; }
         nav button {
             background: var(--btn-inactive);
             border: none;
             font-size: 14px;
             cursor: pointer;
             padding: 8px 15px;
-            transition: 0.3s;
             color: var(--text-color);
             border-radius: 20px;
             font-weight: 600;
         }
-        nav button:hover { background-color: var(--btn-hover); }
         nav button.active { background-color: var(--accent-color); color: white; }
 
         .search-bar { margin: 25px auto; text-align: center; padding: 0 20px; }
@@ -113,11 +117,6 @@
             color: var(--text-color);
             border: 1px solid var(--border-color);
             outline: none;
-            transition: 0.3s;
-        }
-        .search-bar input:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 8px rgba(255, 59, 59, 0.3);
         }
 
         .products {
@@ -133,44 +132,66 @@
             background: var(--element-bg);
             border-radius: 15px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s;
+            transition: 0.3s;
             text-align: center;
             box-shadow: 0 4px 15px var(--shadow-color);
-            display: block;
-            text-decoration: none;
-            color: inherit;
             border: 1px solid var(--border-color);
+            padding-bottom: 15px;
         }
 
-        .product-card:hover { 
-            transform: translateY(-5px); 
-            box-shadow: 0 8px 20px rgba(255, 59, 59, 0.15); 
-            border-color: var(--accent-color);
+        .product-card img { width: 100%; height: 250px; object-fit: cover; }
+        .product-card h3 { padding: 10px; font-size: 16px; }
+        .product-card .price { color: var(--accent-color); font-weight: bold; font-size: 18px; margin-bottom: 10px; display: block;}
+
+        .add-to-cart {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .add-to-cart:hover { background: var(--accent-hover); }
+
+        /* --- ESTILO DO CARRINHO (SIDEBAR) --- */
+        #cartSidebar {
+            position: fixed;
+            top: 0;
+            right: -350px; /* Escondido */
+            width: 320px;
+            height: 100%;
+            background: var(--cart-bg);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            z-index: 2000;
+            transition: 0.4s ease;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .product-card img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            display: block;
-            opacity: 0.9;
-            transition: opacity 0.3s;
-        }
-        
-        .product-card:hover img { opacity: 1; }
-        .product-card h3 { padding: 15px 10px 5px; font-size: 16px; color: var(--text-color); }
-        .product-card p { color: var(--accent-color); font-weight: bold; padding-bottom: 20px; font-size: 18px; }
+        #cartSidebar.open { right: 0; }
+
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        .close-cart { background: none; border: none; font-size: 24px; color: var(--text-color); cursor: pointer; }
+
+        #cartItems { flex-grow: 1; overflow-y: auto; margin: 20px 0; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 14px; }
+        .cart-item-info { flex-grow: 1; margin-left: 10px; }
+        .remove-item { color: var(--accent-color); cursor: pointer; background: none; border: none; font-size: 12px; }
+
+        .cart-footer { border-top: 1px solid var(--border-color); padding-top: 15px; }
+        .total-price { font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .checkout-btn { background: #28a745; color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer; }
 
         .category { display: none; }
         .category.active { display: contents; }
 
         @media(max-width: 600px) {
-            header { flex-direction: column; padding: 15px; text-align: center; }
-            .header-actions { margin-top: 15px; width: 100%; justify-content: space-between; }
-            nav { margin-top: 15px; flex-wrap: wrap; justify-content: center; }
-            .login-btn { width: auto; flex-grow: 1; text-align: center; }
-            .products { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-            .product-card img { height: 180px; }
+            .products { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .product-card img { height: 150px; }
+            #cartSidebar { width: 100%; right: -100%; }
         }
     </style>
 </head>
@@ -178,101 +199,97 @@
 
 <header>
     <h1>Fashion Store</h1>
-    
     <div class="header-actions">
-        <button id="themeToggle" aria-label="Alternar Tema">☀️</button>
-        <a href="https://melodennis-droid.github.io/Dnzin/" class="login-btn">Minha Conta / Cadastro</a>
+        <button id="themeToggle" title="Trocar Tema">☀️</button>
+        <button id="cartToggle" title="Ver Carrinho">
+            🛒 <span id="cartCount">0</span>
+        </button>
+        <a href="#" class="login-btn">Conta</a>
     </div>
-
-    <nav>
-        <button class="tab-btn active" data-category="shorts">Shorts</button>
-        <button class="tab-btn" data-category="calcas">Calças</button>
-        <button class="tab-btn" data-category="camisetas">Camisetas</button>
-        <button class="tab-btn" data-category="acessorios">Acessórios</button>
-    </nav>
 </header>
+
+<nav>
+    <button class="tab-btn active" data-category="shorts">Shorts</button>
+    <button class="tab-btn" data-category="calcas">Calças</button>
+    <button class="tab-btn" data-category="camisetas">Camisetas</button>
+    <button class="tab-btn" data-category="acessorios">Acessórios</button>
+</nav>
 
 <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Buscar produto...">
 </div>
 
+<aside id="cartSidebar">
+    <div class="cart-header">
+        <h2>Seu Carrinho</h2>
+        <button class="close-cart">&times;</button>
+    </div>
+    <div id="cartItems">
+        </div>
+    <div class="cart-footer">
+        <div class="total-price">
+            <span>Total:</span>
+            <span id="cartTotal">R$ 0,00</span>
+        </div>
+        <button class="checkout-btn">Finalizar Compra</button>
+    </div>
+</aside>
+
 <main class="products">
     <div class="category shorts active">
-        <a href="https://www.lojasrenner.com.br/p/bermuda-jorts-super-baggy-em-jeans-com-cinto-amarracao/-/A-928064491-br.lr?sku=928167730" target="_blank" class="product-card">
+        <div class="product-card" data-name="Jorts" data-price="139.90">
             <img src="https://img.lojasrenner.com.br/item/928167705/original/5.jpg" alt="Short Jeans">
             <h3>Jorts</h3>
-            <p>R$ 139,90</p>
-        </a>
-        <a href="https://pt.aliexpress.com/item/1005007586950012.html?spm=a2g0o.productlist.main.1.597fJ5BpJ5BpjH&algo_pvid=0ad33917-63b3-4ff1-b5a0-d6ec4ff5a5b5&algo_exp_id=0ad33917-63b3-4ff1-b5a0-d6ec4ff5a5b5-0&pdp_ext_f=%7B%22order%22%3A%2223032%22%2C%22spu_best_type%22%3A%22price%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21BRL%2126.71%216.99%21%21%2132.60%218.53%21%402103212317738360621726591e9199%2112000041400442094%21sea%21BR%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A32d6c0c%3Bm03_new_user%3A-29895%3BpisId%3A5000000197837493&curPageLogUid=H9EHy8Pd45G1&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005007586950012%7C_p_origin_prod%3A" target="_blank" class="product-card">
+            <span class="price">R$ 139,90</span>
+            <button class="add-to-cart">Adicionar ao Carrinho</button>
+        </div>
+        <div class="product-card" data-name="Shorts Verão" data-price="39.90">
             <img src="https://ae-pic-a1.aliexpress-media.com/kf/S823909841f4245538e8fd2f007d2b193B.jpg_220x220q75.jpg_.avif" alt="Short Moletom">
-            <h3>Shorts Masculinos de Verão</h3>
-            <p>R$ 39,90</p>
-        </a>
+            <h3>Shorts Verão</h3>
+            <span class="price">R$ 39,90</span>
+            <button class="add-to-cart">Adicionar ao Carrinho</button>
+        </div>
     </div>
 
     <div class="category calcas">
-        <a href="https://pt.aliexpress.com/item/1005009202854463.html?spm=a2g0o.productlist.seoads.1.4a98r1ARr1ARdC&p4p_pvid=202603180456268356140223851420000064808_1&_gl=1*1myet6f*_gcl_au*MTc0Mjk1NzI2NS4xNzczODMzNDY3*_ga*MTI3MDkzOTE2Ny4xNzczODMzNDY3*_ga_VED1YSGNC7*czE3NzM4MzM0NjYkbzEkZzEkdDE3NzM4MzUwNTIkajYwJGwwJGgw&gatewayAdapt=glo2bra" target="_blank" class="product-card">
+        <div class="product-card" data-name="Calça Baggy" data-price="70.49">
             <img src="https://ae-pic-a1.aliexpress-media.com/kf/S982def9dc4234cb4a57589d190420ad6t.jpg_220x220q75.jpg_.avif" alt="Calça Jeans">
-            <h3>Calça baggy</h3>
-            <p>R$ 70,49</p>
-        </a>
+            <h3>Calça Baggy</h3>
+            <span class="price">R$ 70,49</span>
+            <button class="add-to-cart">Adicionar ao Carrinho</button>
+        </div>
     </div>
 
     <div class="category camisetas">
-        <a href="https://pt.aliexpress.com/item/1005008219097903.html?spm=a2g0o.productlist.main.1.122617fartc37P&algo_pvid=46a99e0e-80a7-4f32-bcaa-5e2f20e1d155&algo_exp_id=46a99e0e-80a7-4f32-bcaa-5e2f20e1d155-0&pdp_ext_f=%7B%22order%22%3A%222301%22%2C%22spu_best_type%22%3A%22price%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21BRL%21200.20%21112.11%21%21%21244.39%21136.86%21%402103122117738365814576652e614d%2112000044275967272%21sea%21BR%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A32d6c0c%3Bm03_new_user%3A-29895&curPageLogUid=3F9oqAJiiFYd&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005008219097903%7C_p_origin_prod%3A" target="_blank" class="product-card">
-            <img src="https://ae-pic-a1.aliexpress-media.com/kf/Sd1398b2ae44e43f2b669052171448944o.jpg?has_lang=1&ver=2_220x220q75.jpg_.avif" alt="Camiseta Branca">
-            <h3>Camisa polo assombrada américa retro</h3>
-            <p>R$ 112,11</p>
-        </a>
+        <div class="product-card" data-name="Polo Retro" data-price="112.11">
+            <img src="https://ae-pic-a1.aliexpress-media.com/kf/Sd1398b2ae44e43f2b669052171448944o.jpg?has_lang=1&ver=2_220x220q75.jpg_.avif" alt="Camiseta">
+            <h3>Polo Retro</h3>
+            <span class="price">R$ 112,11</span>
+            <button class="add-to-cart">Adicionar ao Carrinho</button>
+        </div>
     </div>
 
     <div class="category acessorios">
-        <a href="https://pt.aliexpress.com/item/1005005056828824.html" target="_blank" class="product-card">
-            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S22c63b937eaa47049da3b0085af7356bw.jpg_220x220q75.jpg_.avif" alt="Aneis y2k">
+        <div class="product-card" data-name="Aneis y2k" data-price="6.99">
+            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S22c63b937eaa47049da3b0085af7356bw.jpg_220x220q75.jpg_.avif" alt="Aneis">
             <h3>Aneis y2k</h3>
-            <p>R$ 6,99</p>
-        </a>
-        <a href="https://pt.aliexpress.com/item/1005007936172376.html" target="_blank" class="product-card">
-            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S478e40cd337f4394ac04d5c9c20132f8N.jpg_220x220q75.jpg_.avif" alt="Corrente y2k">
-            <h3>Corrente y2k</h3>
-            <p>R$ 6,99</p>
-        </a>
-        <a href="https://pt.aliexpress.com/item/1005011780762243.html" target="_blank" class="product-card">
-            <img src="https://ae-pic-a1.aliexpress-media.com/kf/Sd837a8b782be4f3d83531c173858456f8.jpg_220x220q75.jpg_.avif" alt="Pulseira trevor">
-            <h3>Pulseira trevor</h3>
-            <p>R$ 53,59</p>
-        </a>
+            <span class="price">R$ 6,99</span>
+            <button class="add-to-cart">Adicionar ao Carrinho</button>
+        </div>
     </div>
 </main>
 
 <script>
-    // --- LÓGICA DO TEMA CLARO/ESCURO ---
+    // --- LÓGICA DO TEMA ---
     const themeToggleBtn = document.getElementById('themeToggle');
     const body = document.body;
 
-    // Verifica no localStorage se o usuário já havia escolhido o tema claro antes
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme === 'light') {
-        body.classList.add('light-mode');
-        themeToggleBtn.innerText = '🌙'; // Muda o ícone para lua
-    }
-
-    // Função que roda ao clicar no botão
     themeToggleBtn.addEventListener('click', () => {
         body.classList.toggle('light-mode');
-        
-        // Se o body agora tem a classe light-mode, salvamos isso e mudamos o ícone
-        if (body.classList.contains('light-mode')) {
-            localStorage.setItem('theme', 'light');
-            themeToggleBtn.innerText = '🌙'; 
-        } else {
-            // Se voltou pro escuro, limpamos o localStorage e mudamos pro sol
-            localStorage.setItem('theme', 'dark');
-            themeToggleBtn.innerText = '☀️';
-        }
+        themeToggleBtn.innerText = body.classList.contains('light-mode') ? '🌙' : '☀️';
     });
 
-    // --- LÓGICA DAS ABAS DE CATEGORIAS ---
+    // --- LÓGICA DAS ABAS ---
     const buttons = document.querySelectorAll('.tab-btn');
     const categories = document.querySelectorAll('.category');
 
@@ -286,22 +303,70 @@
         });
     });
 
-    // --- LÓGICA DA BARRA DE BUSCA ---
+    // --- LÓGICA DO CARRINHO ---
+    let cart = [];
+    const cartSidebar = document.getElementById('cartSidebar');
+    const cartItemsContainer = document.getElementById('cartItems');
+    const cartCountLabel = document.getElementById('cartCount');
+    const cartTotalLabel = document.getElementById('cartTotal');
+    const openCartBtn = document.getElementById('cartToggle');
+    const closeCartBtn = document.querySelector('.close-cart');
+
+    // Abrir/Fechar
+    openCartBtn.onclick = () => cartSidebar.classList.add('open');
+    closeCartBtn.onclick = () => cartSidebar.classList.remove('open');
+
+    // Adicionar item
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const card = e.target.closest('.product-card');
+            const name = card.getAttribute('data-name');
+            const price = parseFloat(card.getAttribute('data-price'));
+
+            addToCart(name, price);
+            cartSidebar.classList.add('open'); // Abre o carrinho ao adicionar
+        });
+    });
+
+    function addToCart(name, price) {
+        cart.push({ name, price });
+        updateCartUI();
+    }
+
+    function removeItem(index) {
+        cart.splice(index, 1);
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        cartItemsContainer.innerHTML = '';
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            total += item.price;
+            const div = document.createElement('div');
+            div.className = 'cart-item';
+            div.innerHTML = `
+                <div class="cart-item-info">
+                    <strong>${item.name}</strong><br>
+                    R$ ${item.price.toFixed(2)}
+                </div>
+                <button class="remove-item" onclick="removeItem(${index})">Remover</button>
+            `;
+            cartItemsContainer.appendChild(div);
+        });
+
+        cartCountLabel.innerText = cart.length;
+        cartTotalLabel.innerText = `R$ ${total.toFixed(2)}`;
+    }
+
+    // --- BUSCA ---
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase();
-        // Em vez de buscar só na categoria ativa, busca em todos os cards e muda o display
-        const productCards = document.querySelectorAll('.product-card');
-
-        productCards.forEach(card => {
+        document.querySelectorAll('.product-card').forEach(card => {
             const title = card.querySelector('h3').innerText.toLowerCase();
-            if(title.includes(term)) {
-                // Ao invés de usar block, use flex ou o valor original se necessário. 
-                // Aqui block já atende porque o "a" nativamente suporta.
-                card.style.display = "block";
-            } else {
-                card.style.display = "none";
-            }
+            card.style.display = title.includes(term) ? "block" : "none";
         });
     });
 </script>
