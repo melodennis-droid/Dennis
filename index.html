@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Store - Nova Coleção</title>
     <style>
-        /* 1. VARIÁVEIS CSS */
         :root {
             --bg-color: #0a0a0a;
             --text-color: #f0f0f0;
@@ -13,11 +12,9 @@
             --element-bg: #111111;
             --border-color: #222222;
             --btn-inactive: #222222;
-            --btn-hover: #333333;
             --accent-color: #ff3b3b;
             --accent-hover: #d32f2f;
             --shadow-color: rgba(0, 0, 0, 0.5);
-            --header-shadow: rgba(0, 0, 0, 0.8);
             --cart-bg: #1a1a1a;
         }
 
@@ -28,9 +25,7 @@
             --element-bg: #ffffff;
             --border-color: #dddddd;
             --btn-inactive: #e0e0e0;
-            --btn-hover: #cccccc;
             --shadow-color: rgba(0, 0, 0, 0.1);
-            --header-shadow: rgba(0, 0, 0, 0.1);
             --cart-bg: #ffffff;
         }
 
@@ -39,8 +34,7 @@
         body { 
             background-color: var(--bg-color); 
             color: var(--text-color); 
-            line-height: 1.6; 
-            transition: background-color 0.3s, color 0.3s;
+            transition: 0.3s;
             overflow-x: hidden;
         }
 
@@ -49,7 +43,6 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px var(--header-shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -67,11 +60,9 @@
             font-size: 24px;
             cursor: pointer;
             color: var(--text-color);
-            transition: transform 0.3s;
             position: relative;
         }
 
-        /* Contador de itens no carrinho */
         #cartCount {
             position: absolute;
             top: -5px;
@@ -81,33 +72,21 @@
             font-size: 12px;
             padding: 2px 6px;
             border-radius: 50%;
-            font-weight: bold;
         }
 
-        .login-btn {
-            background-color: var(--accent-color);
-            color: white;
-            text-decoration: none;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        nav { display: flex; gap: 10px; margin-top: 10px; justify-content: center; padding: 10px; }
+        nav { display: flex; gap: 10px; justify-content: center; padding: 15px; flex-wrap: wrap; }
         nav button {
             background: var(--btn-inactive);
             border: none;
-            font-size: 14px;
-            cursor: pointer;
             padding: 8px 15px;
             color: var(--text-color);
             border-radius: 20px;
+            cursor: pointer;
             font-weight: 600;
         }
         nav button.active { background-color: var(--accent-color); color: white; }
 
-        .search-bar { margin: 25px auto; text-align: center; padding: 0 20px; }
+        .search-bar { text-align: center; padding: 10px 20px; }
         .search-bar input {
             width: 100%;
             max-width: 500px;
@@ -121,7 +100,7 @@
 
         .products {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 25px;
             padding: 20px 5%;
             max-width: 1300px;
@@ -133,65 +112,72 @@
             border-radius: 15px;
             overflow: hidden;
             transition: 0.3s;
-            text-align: center;
-            box-shadow: 0 4px 15px var(--shadow-color);
             border: 1px solid var(--border-color);
-            padding-bottom: 15px;
+            display: flex;
+            flex-direction: column;
         }
 
+        .product-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
+
         .product-card img { width: 100%; height: 250px; object-fit: cover; }
-        .product-card h3 { padding: 10px; font-size: 16px; }
-        .product-card .price { color: var(--accent-color); font-weight: bold; font-size: 18px; margin-bottom: 10px; display: block;}
+        
+        .card-content { padding: 15px; text-align: center; flex-grow: 1; }
+        .card-content h3 { font-size: 16px; margin-bottom: 10px; }
+        .price { color: var(--accent-color); font-weight: bold; font-size: 18px; margin-bottom: 15px; display: block; }
+
+        .btn-group { display: flex; flex-direction: column; gap: 8px; }
+
+        .btn-link {
+            text-decoration: none;
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-link:hover { background: var(--accent-color); color: white; }
 
         .add-to-cart {
             background: var(--accent-color);
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 10px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            transition: 0.3s;
         }
-        .add-to-cart:hover { background: var(--accent-hover); }
 
-        /* --- ESTILO DO CARRINHO (SIDEBAR) --- */
+        /* SIDEBAR CARRINHO */
         #cartSidebar {
             position: fixed;
             top: 0;
-            right: -350px; /* Escondido */
+            right: -350px;
             width: 320px;
             height: 100%;
             background: var(--cart-bg);
             box-shadow: -5px 0 15px rgba(0,0,0,0.3);
             z-index: 2000;
-            transition: 0.4s ease;
+            transition: 0.4s;
             padding: 20px;
             display: flex;
             flex-direction: column;
         }
-
         #cartSidebar.open { right: 0; }
-
-        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
-        .close-cart { background: none; border: none; font-size: 24px; color: var(--text-color); cursor: pointer; }
-
+        .cart-header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
         #cartItems { flex-grow: 1; overflow-y: auto; margin: 20px 0; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 14px; }
-        .cart-item-info { flex-grow: 1; margin-left: 10px; }
-        .remove-item { color: var(--accent-color); cursor: pointer; background: none; border: none; font-size: 12px; }
-
-        .cart-footer { border-top: 1px solid var(--border-color); padding-top: 15px; }
-        .total-price { font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; margin-bottom: 15px; }
-        .checkout-btn { background: #28a745; color: white; border: none; width: 100%; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .cart-item { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); }
+        .checkout-btn { background: #28a745; color: white; border: none; width: 100%; padding: 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
 
         .category { display: none; }
         .category.active { display: contents; }
 
         @media(max-width: 600px) {
             .products { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .product-card img { height: 150px; }
-            #cartSidebar { width: 100%; right: -100%; }
+            .product-card img { height: 160px; }
+            #cartSidebar { width: 100%; }
         }
     </style>
 </head>
@@ -200,11 +186,8 @@
 <header>
     <h1>Fashion Store</h1>
     <div class="header-actions">
-        <button id="themeToggle" title="Trocar Tema">☀️</button>
-        <button id="cartToggle" title="Ver Carrinho">
-            🛒 <span id="cartCount">0</span>
-        </button>
-        <a href="#" class="login-btn">Conta</a>
+        <button id="themeToggle">☀️</button>
+        <button id="cartToggle">🛒 <span id="cartCount">0</span></button>
     </div>
 </header>
 
@@ -216,159 +199,157 @@
 </nav>
 
 <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Buscar produto...">
+    <input type="text" id="searchInput" placeholder="O que você está procurando?">
 </div>
 
 <aside id="cartSidebar">
     <div class="cart-header">
-        <h2>Seu Carrinho</h2>
-        <button class="close-cart">&times;</button>
+        <h2>Carrinho</h2>
+        <button onclick="document.getElementById('cartSidebar').classList.remove('open')" style="background:none; border:none; color:var(--text-color); font-size:25px; cursor:pointer;">&times;</button>
     </div>
-    <div id="cartItems">
-        </div>
+    <div id="cartItems"></div>
     <div class="cart-footer">
-        <div class="total-price">
-            <span>Total:</span>
-            <span id="cartTotal">R$ 0,00</span>
-        </div>
-        <button class="checkout-btn">Finalizar Compra</button>
+        <p style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:bold;">Total: <span id="cartTotal">R$ 0,00</span></p>
+        <button class="checkout-btn">Finalizar Pedido</button>
     </div>
 </aside>
 
 <main class="products">
     <div class="category shorts active">
-        <div class="product-card" data-name="Jorts" data-price="139.90">
-            <img src="https://img.lojasrenner.com.br/item/928167705/original/5.jpg" alt="Short Jeans">
-            <h3>Jorts</h3>
-            <span class="price">R$ 139,90</span>
-            <button class="add-to-cart">Adicionar ao Carrinho</button>
+        <div class="product-card" data-name="Jorts Super Baggy" data-price="139.90">
+            <img src="https://img.lojasrenner.com.br/item/928167705/original/5.jpg" alt="Jorts">
+            <div class="card-content">
+                <h3>Jorts Super Baggy</h3>
+                <span class="price">R$ 139,90</span>
+                <div class="btn-group">
+                    <a href="https://www.lojasrenner.com.br/p/bermuda-jorts-super-baggy-em-jeans-com-cinto-amarracao/-/A-928064491-br.lr?sku=928167730" target="_blank" class="btn-link">Ver na Loja</a>
+                    <button class="add-to-cart">Adicionar ao Carrinho</button>
+                </div>
+            </div>
         </div>
         <div class="product-card" data-name="Shorts Verão" data-price="39.90">
-            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S823909841f4245538e8fd2f007d2b193B.jpg_220x220q75.jpg_.avif" alt="Short Moletom">
-            <h3>Shorts Verão</h3>
-            <span class="price">R$ 39,90</span>
-            <button class="add-to-cart">Adicionar ao Carrinho</button>
+            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S823909841f4245538e8fd2f007d2b193B.jpg_220x220q75.jpg_.avif" alt="Shorts">
+            <div class="card-content">
+                <h3>Shorts Verão</h3>
+                <span class="price">R$ 39,90</span>
+                <div class="btn-group">
+                    <a href="https://pt.aliexpress.com/item/1005007586950012.html" target="_blank" class="btn-link">Ver na Loja</a>
+                    <button class="add-to-cart">Adicionar ao Carrinho</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="category calcas">
-        <div class="product-card" data-name="Calça Baggy" data-price="70.49">
-            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S982def9dc4234cb4a57589d190420ad6t.jpg_220x220q75.jpg_.avif" alt="Calça Jeans">
-            <h3>Calça Baggy</h3>
-            <span class="price">R$ 70,49</span>
-            <button class="add-to-cart">Adicionar ao Carrinho</button>
+        <div class="product-card" data-name="Calça Baggy Jeans" data-price="70.49">
+            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S982def9dc4234cb4a57589d190420ad6t.jpg_220x220q75.jpg_.avif" alt="Calça">
+            <div class="card-content">
+                <h3>Calça Baggy Jeans</h3>
+                <span class="price">R$ 70,49</span>
+                <div class="btn-group">
+                    <a href="https://pt.aliexpress.com/item/1005009202854463.html" target="_blank" class="btn-link">Ver na Loja</a>
+                    <button class="add-to-cart">Adicionar ao Carrinho</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="category camisetas">
-        <div class="product-card" data-name="Polo Retro" data-price="112.11">
-            <img src="https://ae-pic-a1.aliexpress-media.com/kf/Sd1398b2ae44e43f2b669052171448944o.jpg?has_lang=1&ver=2_220x220q75.jpg_.avif" alt="Camiseta">
-            <h3>Polo Retro</h3>
-            <span class="price">R$ 112,11</span>
-            <button class="add-to-cart">Adicionar ao Carrinho</button>
+        <div class="product-card" data-name="Polo Retro América" data-price="112.11">
+            <img src="https://ae-pic-a1.aliexpress-media.com/kf/Sd1398b2ae44e43f2b669052171448944o.jpg" alt="Camiseta">
+            <div class="card-content">
+                <h3>Polo Retro América</h3>
+                <span class="price">R$ 112,11</span>
+                <div class="btn-group">
+                    <a href="https://pt.aliexpress.com/item/1005008219097903.html" target="_blank" class="btn-link">Ver na Loja</a>
+                    <button class="add-to-cart">Adicionar ao Carrinho</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="category acessorios">
-        <div class="product-card" data-name="Aneis y2k" data-price="6.99">
-            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S22c63b937eaa47049da3b0085af7356bw.jpg_220x220q75.jpg_.avif" alt="Aneis">
-            <h3>Aneis y2k</h3>
-            <span class="price">R$ 6,99</span>
-            <button class="add-to-cart">Adicionar ao Carrinho</button>
+        <div class="product-card" data-name="Kit Aneis Y2K" data-price="6.99">
+            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S22c63b937eaa47049da3b0085af7356bw.jpg" alt="Aneis">
+            <div class="card-content">
+                <h3>Kit Aneis Y2K</h3>
+                <span class="price">R$ 6,99</span>
+                <div class="btn-group">
+                    <a href="https://pt.aliexpress.com/item/1005005056828824.html" target="_blank" class="btn-link">Ver na Loja</a>
+                    <button class="add-to-cart">Adicionar ao Carrinho</button>
+                </div>
+            </div>
         </div>
     </div>
 </main>
 
 <script>
-    // --- LÓGICA DO TEMA ---
-    const themeToggleBtn = document.getElementById('themeToggle');
-    const body = document.body;
+    // Tema
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.onclick = () => {
+        document.body.classList.toggle('light-mode');
+        themeToggle.innerText = document.body.classList.contains('light-mode') ? '🌙' : '☀️';
+    };
 
-    themeToggleBtn.addEventListener('click', () => {
-        body.classList.toggle('light-mode');
-        themeToggleBtn.innerText = body.classList.contains('light-mode') ? '🌙' : '☀️';
+    // Abas
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(tab => {
+        tab.onclick = () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            document.querySelectorAll('.category').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.category.${tab.dataset.category}`).classList.add('active');
+        };
     });
 
-    // --- LÓGICA DAS ABAS ---
-    const buttons = document.querySelectorAll('.tab-btn');
-    const categories = document.querySelectorAll('.category');
-
-    buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            const categoryToOpen = button.getAttribute('data-category');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            categories.forEach(cat => cat.classList.remove('active'));
-            document.querySelector(`.category.${categoryToOpen}`).classList.add('active');
-        });
-    });
-
-    // --- LÓGICA DO CARRINHO ---
+    // Carrinho
     let cart = [];
-    const cartSidebar = document.getElementById('cartSidebar');
-    const cartItemsContainer = document.getElementById('cartItems');
-    const cartCountLabel = document.getElementById('cartCount');
-    const cartTotalLabel = document.getElementById('cartTotal');
-    const openCartBtn = document.getElementById('cartToggle');
-    const closeCartBtn = document.querySelector('.close-cart');
+    const sidebar = document.getElementById('cartSidebar');
+    const itemsContainer = document.getElementById('cartItems');
 
-    // Abrir/Fechar
-    openCartBtn.onclick = () => cartSidebar.classList.add('open');
-    closeCartBtn.onclick = () => cartSidebar.classList.remove('open');
+    document.getElementById('cartToggle').onclick = () => sidebar.classList.add('open');
 
-    // Adicionar item
-    document.querySelectorAll('.add-to-cart').forEach(button => {
-        button.addEventListener('click', (e) => {
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.onclick = (e) => {
             const card = e.target.closest('.product-card');
-            const name = card.getAttribute('data-name');
-            const price = parseFloat(card.getAttribute('data-price'));
-
-            addToCart(name, price);
-            cartSidebar.classList.add('open'); // Abre o carrinho ao adicionar
-        });
+            cart.push({
+                name: card.dataset.name,
+                price: parseFloat(card.dataset.price)
+            });
+            updateCart();
+            sidebar.classList.add('open');
+        };
     });
 
-    function addToCart(name, price) {
-        cart.push({ name, price });
-        updateCartUI();
-    }
-
-    function removeItem(index) {
-        cart.splice(index, 1);
-        updateCartUI();
-    }
-
-    function updateCartUI() {
-        cartItemsContainer.innerHTML = '';
+    function updateCart() {
+        itemsContainer.innerHTML = '';
         let total = 0;
-
-        cart.forEach((item, index) => {
+        cart.forEach((item, i) => {
             total += item.price;
-            const div = document.createElement('div');
-            div.className = 'cart-item';
-            div.innerHTML = `
-                <div class="cart-item-info">
+            itemsContainer.innerHTML += `
+                <div class="cart-item">
                     <strong>${item.name}</strong><br>
-                    R$ ${item.price.toFixed(2)}
-                </div>
-                <button class="remove-item" onclick="removeItem(${index})">Remover</button>
-            `;
-            cartItemsContainer.appendChild(div);
+                    R$ ${item.price.toFixed(2)} 
+                    <button onclick="remove(${i})" style="color:red; background:none; border:none; cursor:pointer; float:right">Remover</button>
+                </div>`;
         });
-
-        cartCountLabel.innerText = cart.length;
-        cartTotalLabel.innerText = `R$ ${total.toFixed(2)}`;
+        document.getElementById('cartCount').innerText = cart.length;
+        document.getElementById('cartTotal').innerText = `R$ ${total.toFixed(2)}`;
     }
 
-    // --- BUSCA ---
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', (e) => {
-        const term = e.target.value.toLowerCase();
+    window.remove = (i) => {
+        cart.splice(i, 1);
+        updateCart();
+    };
+
+    // Busca
+    document.getElementById('searchInput').oninput = (e) => {
+        const val = e.target.value.toLowerCase();
         document.querySelectorAll('.product-card').forEach(card => {
             const title = card.querySelector('h3').innerText.toLowerCase();
-            card.style.display = title.includes(term) ? "block" : "none";
+            card.style.display = title.includes(val) ? "flex" : "none";
         });
-    });
+    };
 </script>
 
 </body>
