@@ -168,7 +168,33 @@
         #cartSidebar.open { right: 0; }
         .cart-header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
         #cartItems { flex-grow: 1; overflow-y: auto; margin: 20px 0; }
-        .cart-item { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); }
+        
+        .cart-item { 
+            margin-bottom: 15px; 
+            padding-bottom: 10px; 
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .cart-item-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .cart-buy-link {
+            color: #28a745;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            border: 1px solid #28a745;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
         .checkout-btn { background: #28a745; color: white; border: none; width: 100%; padding: 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
 
         .category { display: none; }
@@ -210,13 +236,13 @@
     <div id="cartItems"></div>
     <div class="cart-footer">
         <p style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:bold;">Total: <span id="cartTotal">R$ 0,00</span></p>
-        <button class="checkout-btn">Finalizar Pedido</button>
+        <button class="checkout-btn" onclick="alert('Redirecionando para checkout...')">Finalizar Tudo</button>
     </div>
 </aside>
 
 <main class="products">
     <div class="category shorts active">
-        <div class="product-card" data-name="Jorts Super Baggy" data-price="139.90">
+        <div class="product-card" data-name="Jorts Super Baggy" data-price="139.90" data-url="https://www.lojasrenner.com.br/p/bermuda-jorts-super-baggy-em-jeans-com-cinto-amarracao/-/A-928064491-br.lr?sku=928167730">
             <img src="https://img.lojasrenner.com.br/item/928167705/original/5.jpg" alt="Jorts">
             <div class="card-content">
                 <h3>Jorts Super Baggy</h3>
@@ -227,7 +253,7 @@
                 </div>
             </div>
         </div>
-        <div class="product-card" data-name="Shorts Verão" data-price="39.90">
+        <div class="product-card" data-name="Shorts Verão" data-price="39.90" data-url="https://pt.aliexpress.com/item/1005007586950012.html">
             <img src="https://ae-pic-a1.aliexpress-media.com/kf/S823909841f4245538e8fd2f007d2b193B.jpg_220x220q75.jpg_.avif" alt="Shorts">
             <div class="card-content">
                 <h3>Shorts Verão</h3>
@@ -241,7 +267,7 @@
     </div>
 
     <div class="category calcas">
-        <div class="product-card" data-name="Calça Baggy Jeans" data-price="70.49">
+        <div class="product-card" data-name="Calça Baggy Jeans" data-price="70.49" data-url="https://pt.aliexpress.com/item/1005009202854463.html">
             <img src="https://ae-pic-a1.aliexpress-media.com/kf/S982def9dc4234cb4a57589d190420ad6t.jpg_220x220q75.jpg_.avif" alt="Calça">
             <div class="card-content">
                 <h3>Calça Baggy Jeans</h3>
@@ -255,7 +281,7 @@
     </div>
 
     <div class="category camisetas">
-        <div class="product-card" data-name="Polo Retro América" data-price="112.11">
+        <div class="product-card" data-name="Polo Retro América" data-price="112.11" data-url="https://pt.aliexpress.com/item/1005008219097903.html">
             <img src="https://ae-pic-a1.aliexpress-media.com/kf/Sd1398b2ae44e43f2b669052171448944o.jpg" alt="Camiseta">
             <div class="card-content">
                 <h3>Polo Retro América</h3>
@@ -269,7 +295,7 @@
     </div>
 
     <div class="category acessorios">
-        <div class="product-card" data-name="Kit Aneis Y2K" data-price="6.99">
+        <div class="product-card" data-name="Kit Aneis Y2K" data-price="6.99" data-url="https://pt.aliexpress.com/item/1005005056828824.html">
             <img src="https://ae-pic-a1.aliexpress-media.com/kf/S22c63b937eaa47049da3b0085af7356bw.jpg" alt="Aneis">
             <div class="card-content">
                 <h3>Kit Aneis Y2K</h3>
@@ -302,7 +328,7 @@
         };
     });
 
-    // Carrinho
+    // --- CARRINHO ATUALIZADO ---
     let cart = [];
     const sidebar = document.getElementById('cartSidebar');
     const itemsContainer = document.getElementById('cartItems');
@@ -312,9 +338,11 @@
     document.querySelectorAll('.add-to-cart').forEach(btn => {
         btn.onclick = (e) => {
             const card = e.target.closest('.product-card');
+            // Agora salvamos também a URL (data-url)
             cart.push({
                 name: card.dataset.name,
-                price: parseFloat(card.dataset.price)
+                price: parseFloat(card.dataset.price),
+                url: card.dataset.url
             });
             updateCart();
             sidebar.classList.add('open');
@@ -328,9 +356,14 @@
             total += item.price;
             itemsContainer.innerHTML += `
                 <div class="cart-item">
-                    <strong>${item.name}</strong><br>
-                    R$ ${item.price.toFixed(2)} 
-                    <button onclick="remove(${i})" style="color:red; background:none; border:none; cursor:pointer; float:right">Remover</button>
+                    <div>
+                        <strong>${item.name}</strong><br>
+                        <span>R$ ${item.price.toFixed(2)}</span>
+                    </div>
+                    <div class="cart-item-actions">
+                        <a href="${item.url}" target="_blank" class="cart-buy-link">Comprar Item</a>
+                        <button onclick="remove(${i})" style="color:red; background:none; border:none; cursor:pointer; font-size:11px">Remover</button>
+                    </div>
                 </div>`;
         });
         document.getElementById('cartCount').innerText = cart.length;
