@@ -5,289 +5,220 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Store - Nova Coleção</title>
     <style>
+        /* --- DESIGN ÚNICO: ELECTRIC GLASS & NEOMORPHISM --- */
         :root {
-            --bg-color: #0a0a0a;
-            --text-color: #f0f0f0;
-            --header-bg: #000000;
-            --element-bg: #111111;
-            --border-color: #222222;
-            --btn-inactive: #222222;
-            --accent-color: #ff3b3b;
-            --accent-hover: #d32f2f;
+            --bg-color: #0f111a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --text-color: #e0e0e0;
+            --header-bg: rgba(15, 17, 26, 0.8);
+            --element-bg: #161925;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --btn-inactive: #25293d;
+            --accent-color: #8a2be2; /* Violeta Elétrico */
+            --accent-gradient: linear-gradient(135deg, #8a2be2, #00d2ff);
             --shadow-color: rgba(0, 0, 0, 0.5);
-            --cart-bg: #1a1a1a;
-            --look-bg: #151515;
+            --look-bg: #1a1d2e;
+            --border-radius: 20px;
         }
 
         body.light-mode {
-            --bg-color: #f4f4f5;
-            --text-color: #1a1a1a;
-            --header-bg: #ffffff;
+            --bg-color: #f0f2f5;
+            --glass-bg: rgba(0, 0, 0, 0.03);
+            --text-color: #2d3436;
+            --header-bg: rgba(255, 255, 255, 0.8);
             --element-bg: #ffffff;
-            --border-color: #dddddd;
+            --border-color: rgba(0, 0, 0, 0.1);
             --btn-inactive: #e0e0e0;
             --shadow-color: rgba(0, 0, 0, 0.1);
-            --cart-bg: #ffffff;
             --look-bg: #f9f9f9;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
         
         body { 
             background-color: var(--bg-color); 
             color: var(--text-color); 
-            transition: 0.3s;
+            transition: all 0.4s ease;
             overflow-x: hidden;
         }
 
+        /* Header com Efeito de Vidro */
         header {
             background-color: var(--header-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             position: sticky;
             top: 0;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
+            padding: 20px 5%;
             border-bottom: 1px solid var(--border-color);
         }
 
-        header h1 { font-size: 22px; color: var(--accent-color); text-transform: uppercase; letter-spacing: 2px; }
-
-        .header-actions { display: flex; align-items: center; gap: 15px; }
+        header h1 { 
+            font-size: 24px; 
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase; 
+            letter-spacing: 3px;
+            font-weight: 800;
+        }
 
         #themeToggle, #cartToggle {
-            background: none;
-            border: none;
-            font-size: 24px;
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 12px;
             cursor: pointer;
             color: var(--text-color);
-            position: relative;
+            transition: 0.3s;
         }
 
         #cartCount {
-            position: absolute;
-            top: -5px;
-            right: -5px;
             background: var(--accent-color);
             color: white;
-            font-size: 12px;
-            padding: 2px 6px;
+            font-size: 11px;
+            padding: 2px 7px;
             border-radius: 50%;
+            margin-left: 5px;
         }
 
-        nav { display: flex; gap: 10px; justify-content: center; padding: 15px; flex-wrap: wrap; }
+        /* Navegação Estilo Pílula */
+        nav { display: flex; gap: 12px; justify-content: center; padding: 25px; flex-wrap: wrap; }
         nav button {
             background: var(--btn-inactive);
-            border: none;
-            padding: 8px 15px;
+            border: 1px solid transparent;
+            padding: 10px 20px;
             color: var(--text-color);
-            border-radius: 20px;
+            border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.2s;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        nav button.active { background-color: var(--accent-color); color: white; }
-        
-        /* Destaque para a aba de montar look */
-        nav button[data-category="montar-look"] { border: 1px solid var(--accent-color); }
-        nav button[data-category="montar-look"].active { background-color: var(--accent-color); color: white; }
+        nav button.active { 
+            background: var(--accent-gradient); 
+            color: white; 
+            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+            transform: scale(1.05);
+        }
 
-        .search-bar { text-align: center; padding: 10px 20px; }
+        .search-bar { text-align: center; padding: 10px 20px 30px; }
         .search-bar input {
             width: 100%;
             max-width: 500px;
-            padding: 12px 25px;
-            border-radius: 30px;
+            padding: 15px 25px;
+            border-radius: 15px;
             background-color: var(--element-bg);
             color: var(--text-color);
             border: 1px solid var(--border-color);
             outline: none;
+            box-shadow: var(--shadow-color) 0px 4px 12px;
         }
 
+        /* Grid de Produtos Premium */
         .products {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 25px;
-            padding: 20px 5%;
-            max-width: 1300px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px 5% 50px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .product-card {
             background: var(--element-bg);
-            border-radius: 15px;
+            border-radius: var(--border-radius);
             overflow: hidden;
-            transition: 0.3s;
+            transition: 0.4s;
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
+            padding: 15px;
         }
 
-        .product-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
+        .product-card:hover { 
+            transform: translateY(-10px); 
+            border-color: var(--accent-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
 
-        .product-card img { width: 100%; height: 250px; object-fit: cover; }
+        .product-card img { 
+            width: 100%; 
+            height: 280px; 
+            object-fit: cover; 
+            border-radius: 15px;
+        }
         
-        .card-content { padding: 15px; text-align: center; flex-grow: 1; }
-        .card-content h3 { font-size: 16px; margin-bottom: 10px; }
-        .price { color: var(--accent-color); font-weight: bold; font-size: 18px; margin-bottom: 15px; display: block; }
+        .card-content { padding: 15px 5px; text-align: left; }
+        .card-content h3 { font-size: 18px; margin-bottom: 8px; font-weight: 600; }
+        .price { color: var(--accent-color); font-weight: 800; font-size: 20px; margin-bottom: 15px; display: block; }
 
-        .btn-group { display: flex; flex-direction: column; gap: 8px; }
+        .btn-group { display: flex; flex-direction: column; gap: 10px; }
 
-        .btn-link, .add-to-look {
-            text-decoration: none;
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            padding: 8px;
-            border-radius: 5px;
+        .btn-link, .add-to-look, .add-to-cart {
+            padding: 12px;
+            border-radius: 12px;
             font-size: 13px;
             font-weight: bold;
-            transition: 0.3s;
             cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+            text-decoration: none;
         }
-        .btn-link { border-color: var(--accent-color); color: var(--accent-color); }
-        .btn-link:hover { background: var(--accent-color); color: white; }
-        
-        .add-to-look:hover { background: var(--text-color); color: var(--bg-color); }
 
         .add-to-cart {
-            background: var(--accent-color);
+            background: var(--accent-gradient);
             color: white;
             border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
         }
 
+        .add-to-look {
+            background: rgba(138, 43, 226, 0.1);
+            border: 1px dashed var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-link { 
+            border: 1px solid var(--border-color); 
+            color: var(--text-color); 
+        }
+
+        /* Sidebar do Carrinho */
         #cartSidebar {
             position: fixed;
             top: 0;
-            right: -350px;
-            width: 320px;
+            right: -400px;
+            width: 350px;
             height: 100%;
-            background: var(--cart-bg);
-            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            background: var(--element-bg);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
             z-index: 2000;
-            transition: 0.4s;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 30px;
         }
         #cartSidebar.open { right: 0; }
-        .cart-header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
-        #cartItems { flex-grow: 1; overflow-y: auto; margin: 20px 0; }
-        
-        .cart-item { 
-            margin-bottom: 15px; 
-            padding-bottom: 10px; 
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        
-        .cart-item-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 5px;
-        }
 
-        .cart-buy-link {
-            color: #28a745;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
-            border: 1px solid #28a745;
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-
-        .checkout-btn { background: #28a745; color: white; border: none; width: 100%; padding: 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.2s;}
-        .checkout-btn:hover { background: #218838; }
-
-        .category { display: none; }
-        .category.active { display: contents; }
-
-        /* Estilos do Montador de Look */
-        .montar-look-container {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 5%;
-            max-width: 1000px;
-            margin: 0 auto;
-            width: 100%;
-        }
-        .montar-look-container.active { display: flex; }
-
-        .look-header { text-align: center; margin-bottom: 30px; }
-        .look-header h2 { color: var(--accent-color); margin-bottom: 10px; }
-
+        /* Montador de Look Estilizado */
         .look-canvas {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
             background: var(--look-bg);
-            border: 2px dashed var(--border-color);
-            border-radius: 15px;
-            padding: 30px;
-            min-height: 300px;
-            width: 100%;
-            margin-bottom: 20px;
+            border: 2px dashed var(--accent-color);
+            border-radius: 30px;
+            min-height: 350px;
+            margin-top: 20px;
         }
 
         .look-item {
-            position: relative;
-            width: 150px;
             background: var(--element-bg);
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px var(--shadow-color);
-            text-align: center;
+            border-radius: 20px;
+            border-bottom: 4px solid var(--accent-color);
         }
-
-        .look-item img {
-            width: 100%;
-            height: 120px;
-            object-fit: contain;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-
-        .look-item span { font-size: 12px; font-weight: bold; display: block; }
-        .remove-look-btn {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: red;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .look-footer {
-            width: 100%;
-            background: var(--element-bg);
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            text-align: center;
-        }
-        .look-footer h3 { margin-bottom: 15px; }
 
         @media(max-width: 600px) {
-            .products { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .product-card img { height: 160px; }
+            .products { grid-template-columns: 1fr; }
             #cartSidebar { width: 100%; }
-            .look-item { width: 120px; }
         }
     </style>
 </head>
@@ -307,38 +238,36 @@
     <button class="tab-btn" data-category="camisetas">Camisetas</button>
     <button class="tab-btn" data-category="acessorios">Acessórios</button>
     <button class="tab-btn" data-category="tenis">Tênis</button>
-    <button class="tab-btn" data-category="montar-look" style="margin-left: 20px;">✨ Montar Look</button>
+    <button class="tab-btn" data-category="montar-look" style="border: 1px solid var(--accent-color);">✨ Montar Look</button>
 </nav>
 
 <div class="search-bar" id="searchContainer">
-    <input type="text" id="searchInput" placeholder="O que você está procurando?">
+    <input type="text" id="searchInput" placeholder="Busque por estilo, cor ou peça...">
 </div>
 
 <aside id="cartSidebar">
-    <div class="cart-header">
-        <h2>Carrinho</h2>
-        <button onclick="document.getElementById('cartSidebar').classList.remove('open')" style="background:none; border:none; color:var(--text-color); font-size:25px; cursor:pointer;">&times;</button>
+    <div class="cart-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="color: var(--accent-color)">Meu Carrinho</h2>
+        <button onclick="document.getElementById('cartSidebar').classList.remove('open')" style="background:none; border:none; color:var(--text-color); font-size:30px; cursor:pointer;">&times;</button>
     </div>
     <div id="cartItems"></div>
     <div class="cart-footer">
-        <p style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:bold;">Total: <span id="cartTotal">R$ 0,00</span></p>
-        <button class="checkout-btn" onclick="alert('Redirecionando para checkout...')">Finalizar Tudo</button>
+        <p style="display:flex; justify-content:space-between; margin: 20px 0; font-weight:bold; font-size: 18px;">Total: <span id="cartTotal">R$ 0,00</span></p>
+        <button class="add-to-cart" style="width: 100%;" onclick="alert('Checkout em breve!')">Finalizar Compra</button>
     </div>
 </aside>
 
-<div class="montar-look-container category montar-look">
+<div class="montar-look-container category montar-look" style="display: none; padding: 0 5% 50px; max-width: 1000px; margin: 0 auto; text-align: center;">
     <div class="look-header">
-        <h2>Seu Look Perfeito</h2>
-        <p>Navegue pelas categorias, clique em "Adicionar ao Look" e veja sua combinação aqui!</p>
+        <h2 style="font-size: 28px; margin-bottom: 10px;">Provador Virtual</h2>
+        <p style="opacity: 0.7;">Combine as peças e crie um visual único.</p>
     </div>
-    
-    <div class="look-canvas" id="lookCanvas">
-        <p id="emptyLookMsg" style="align-self: center; color: gray;">Seu provador está vazio. Adicione algumas peças!</p>
-        </div>
-
-    <div class="look-footer">
-        <h3>Total do Look: <span id="lookTotal">R$ 0,00</span></h3>
-        <button id="buyLookBtn" class="checkout-btn" style="max-width: 300px; margin: 0 auto; display: none;">Adicionar Look ao Carrinho</button>
+    <div class="look-canvas" id="lookCanvas" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: center; padding: 40px;">
+        <p id="emptyLookMsg">Arraste peças aqui para começar seu look!</p>
+    </div>
+    <div class="look-footer" style="margin-top: 30px;">
+        <h3 style="margin-bottom: 20px;">Investimento no Look: <span id="lookTotal">R$ 0,00</span></h3>
+        <button id="buyLookBtn" class="add-to-cart" style="display: none; padding: 15px 40px; margin: 0 auto;">Adicionar Look Completo</button>
     </div>
 </div>
 
@@ -351,14 +280,14 @@
                 <span class="price">R$ 139,90</span>
                 <div class="btn-group">
                     <button class="add-to-look">👕 Adicionar ao Look</button>
-                    <a href="https://www.lojasrenner.com.br/p/bermuda-jorts-super-baggy-em-jeans-com-cinto-amarracao/-/A-928064491-br.lr?sku=928167730" target="_blank" class="btn-link">Ver na Loja</a>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
+                    <a href="https://www.lojasrenner.com.br/p/bermuda-jorts-super-baggy-em-jeans-com-cinto-amarracao/-/A-928064491-br.lr?sku=928167730" target="_blank" class="btn-link">Ver na Loja</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="category calcas">
+    <div class="category calcas" style="display: none;">
         <div class="product-card" data-name="Calça Baggy Jeans" data-price="70.49" data-url="https://pt.aliexpress.com/item/1005009202854463.html">
             <img src="https://ae-pic-a1.aliexpress-media.com/kf/S982def9dc4234cb4a57589d190420ad6t.jpg_220x220q75.jpg_.avif" alt="Calça">
             <div class="card-content">
@@ -366,14 +295,14 @@
                 <span class="price">R$ 70,49</span>
                 <div class="btn-group">
                     <button class="add-to-look">👕 Adicionar ao Look</button>
-                    <a href="https://pt.aliexpress.com/item/1005009202854463.html" target="_blank" class="btn-link">Ver na Loja</a>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
+                    <a href="https://pt.aliexpress.com/item/1005009202854463.html" target="_blank" class="btn-link">Ver na Loja</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="category tenis">
+    <div class="category tenis" style="display: none;">
         <div class="product-card" data-name="Tênis PUMA-180" data-price="699.99" data-url="https://br.puma.com/pd/tenis-puma-180/402101.html?color=18">
             <img src="https://images.puma.com/image/upload/f_auto,q_auto,w_600,b_rgb:FAFAFA/global/402101/18/sv01/fnd/BRA/fmt/png" alt="PUMA 180">
             <div class="card-content">
@@ -381,64 +310,6 @@
                 <span class="price">R$ 699,99</span>
                 <div class="btn-group">
                     <button class="add-to-look">👕 Adicionar ao Look</button>
-                    <a href="https://br.puma.com/pd/tenis-puma-180/402101.html?color=18" target="_blank" class="btn-link">Ver na Loja</a>
-                    <button class="add-to-cart">Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-card" data-name="Tênis Superstar II" data-price="599.99" data-url="https://www.adidas.com.br/tenis-superstar-ii/JK4970.html">
-            <img src="https://espacotenis.vteximg.com.br/arquivos/ids/162024-442-442/thumbnail_PHOTO-2020-06-23-15-15-44.jpg?v=637286054121500000" alt="Adidas Forum">
-            <div class="card-content">
-                <h3>Tênis Superstar II </h3>
-                <span class="price">R$ 599,99</span>
-                <div class="btn-group">
-                    <button class="add-to-look">👕 Adicionar ao Look</button>
-                    <a href="https://pt.aliexpress.com/item/1005009288819702.html?src=bing&aff_short_key=UneMJZVf&aff_platform=true&isdl=y&albch=shopping&acnt=135095331&isdl=y&albcp=554793319&albag=1310618982300270&slnk=&trgt=pla-4585513252796093&plac=&crea=81913740567034&netw=o&device=c&mtctp=e&utm_source=Bing&utm_medium=shopping&utm_campaign=PA_Bing_BR_PLA_PC%2FM_SFFC_0-7_ECPC_8%2F16&utm_content=ALL&utm_term=tenis%20wuperstar%20ii&msclkid=c8786ac9617d1ca964c203082fab97fc&gatewayAdapt=glo2bra" target="_blank" class="btn-link">Ver na Loja</a>
-                    <button class="add-to-cart">Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-card" data-name="Slipstream" data-price="479,99" data-url="https://br.puma.com/pd/tenis-slipstream-lth/391764.html?color=02">
-            <img src="https://images.puma.com/image/upload/f_auto,q_auto,w_600,b_rgb:FAFAFA/global/391764/02/sv01/fnd/BRA/fmt/png" alt="NB 550">
-            <div class="card-content">
-                <h3>Tênis Slipstream lth
-</h3>
-                <span class="price">R$ 479,99</span>
-                <div class="btn-group">
-                    <button class="add-to-look">👕 Adicionar ao Look</button>
-                    <a href="https://br.puma.com/pd/tenis-slipstream-lth/391764.html?color=02" target="_blank" class="btn-link">Ver na Loja</a>
-                    <button class="add-to-cart">Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="category camisetas">
-        <div class="product-card" data-name="Polo Retro América" data-price="112.11" data-url="https://pt.aliexpress.com/item/1005008219097903.html">
-            <img src="https://ae-pic-a1.aliexpress-media.com/kf/Sd1398b2ae44e43f2b669052171448944o.jpg" alt="Camiseta">
-            <div class="card-content">
-                <h3>Polo Retro América</h3>
-                <span class="price">R$ 112,11</span>
-                <div class="btn-group">
-                    <button class="add-to-look">👕 Adicionar ao Look</button>
-                    <a href="https://pt.aliexpress.com/item/1005008219097903.html" target="_blank" class="btn-link">Ver na Loja</a>
-                    <button class="add-to-cart">Adicionar ao Carrinho</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="category acessorios">
-        <div class="product-card" data-name="Kit Aneis Y2K" data-price="6.99" data-url="https://pt.aliexpress.com/item/1005005056828824.html">
-            <img src="https://ae-pic-a1.aliexpress-media.com/kf/S22c63b937eaa47049da3b0085af7356bw.jpg" alt="Aneis">
-            <div class="card-content">
-                <h3>Kit Aneis Y2K</h3>
-                <span class="price">R$ 6,99</span>
-                <div class="btn-group">
-                    <button class="add-to-look">👕 Adicionar ao Look</button>
-                    <a href="https://pt.aliexpress.com/item/1005005056828824.html" target="_blank" class="btn-link">Ver na Loja</a>
                     <button class="add-to-cart">Adicionar ao Carrinho</button>
                 </div>
             </div>
@@ -447,168 +318,135 @@
 </main>
 
 <script>
-    // Tema
+    // --- LÓGICA DE INTERFACE ---
     const themeToggle = document.getElementById('themeToggle');
     themeToggle.onclick = () => {
         document.body.classList.toggle('light-mode');
         themeToggle.innerText = document.body.classList.contains('light-mode') ? '🌙' : '☀️';
     };
 
-    // Abas
     const tabs = document.querySelectorAll('.tab-btn');
-    const searchContainer = document.getElementById('searchContainer');
-    const productGrid = document.getElementById('productGrid');
-    
     tabs.forEach(tab => {
         tab.onclick = () => {
             tabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
             
-            // Lógica para esconder/mostrar grid de produtos e barra de pesquisa
-            if(tab.dataset.category === 'montar-look') {
-                searchContainer.style.display = 'none';
-                productGrid.style.display = 'none';
-                document.querySelector('.montar-look-container').classList.add('active');
-            } else {
-                searchContainer.style.display = 'block';
-                productGrid.style.display = 'grid';
-                document.querySelector('.montar-look-container').classList.remove('active');
-                
-                document.querySelectorAll('.category').forEach(c => c.classList.remove('active'));
-                document.querySelectorAll(`.category.${tab.dataset.category}`).forEach(c => c.classList.add('active'));
+            const category = tab.dataset.category;
+            const isLook = category === 'montar-look';
+
+            document.getElementById('searchContainer').style.display = isLook ? 'none' : 'block';
+            document.getElementById('productGrid').style.display = isLook ? 'none' : 'grid';
+            document.querySelector('.montar-look-container').style.display = isLook ? 'block' : 'none';
+
+            if(!isLook) {
+                document.querySelectorAll('.category').forEach(c => c.style.display = 'none');
+                document.querySelectorAll(`.category.${category}`).forEach(c => c.style.display = 'contents');
             }
         };
     });
 
-    // Carrinho
+    // --- LÓGICA DO CARRINHO ---
     let cart = [];
     const sidebar = document.getElementById('cartSidebar');
-    const itemsContainer = document.getElementById('cartItems');
 
     document.getElementById('cartToggle').onclick = () => sidebar.classList.add('open');
 
-    // Função de adicionar ao carrinho
-    function addToCart(name, price, url) {
-        cart.push({ name, price, url });
-        updateCart();
-        sidebar.classList.add('open');
-    }
-
-    document.querySelectorAll('.add-to-cart').forEach(btn => {
-        btn.onclick = (e) => {
-            const card = e.target.closest('.product-card');
-            addToCart(card.dataset.name, parseFloat(card.dataset.price), card.dataset.url);
-        };
-    });
-
-    function updateCart() {
-        itemsContainer.innerHTML = '';
+    function updateCartUI() {
+        const container = document.getElementById('cartItems');
+        container.innerHTML = '';
         let total = 0;
         cart.forEach((item, i) => {
             total += item.price;
-            itemsContainer.innerHTML += `
-                <div class="cart-item">
-                    <div>
-                        <strong>${item.name}</strong><br>
+            container.innerHTML += `
+                <div style="background:var(--glass-bg); padding:15px; border-radius:15px; margin-bottom:10px;">
+                    <div style="display:flex; justify-content:space-between;">
+                        <strong>${item.name}</strong>
                         <span>R$ ${item.price.toFixed(2).replace('.', ',')}</span>
                     </div>
-                    <div class="cart-item-actions">
-                        <a href="${item.url}" target="_blank" class="cart-buy-link">Comprar Item</a>
-                        <button onclick="removeFromCart(${i})" style="color:red; background:none; border:none; cursor:pointer; font-size:11px">Remover</button>
-                    </div>
+                    <button onclick="removeFromCart(${i})" style="color:#ff3b3b; background:none; border:none; cursor:pointer; font-size:12px; margin-top:5px;">Remover</button>
                 </div>`;
         });
         document.getElementById('cartCount').innerText = cart.length;
         document.getElementById('cartTotal').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
     }
 
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.onclick = (e) => {
+            const card = e.target.closest('.product-card');
+            if(!card) return;
+            cart.push({
+                name: card.dataset.name,
+                price: parseFloat(card.dataset.price)
+            });
+            updateCartUI();
+            sidebar.classList.add('open');
+        };
+    });
+
     window.removeFromCart = (i) => {
         cart.splice(i, 1);
-        updateCart();
+        updateCartUI();
     };
 
-    // --- LÓGICA DO MONTADOR DE LOOKS ---
+    // --- LÓGICA DO PROVADOR (LOOK) ---
     let lookItems = [];
     const lookCanvas = document.getElementById('lookCanvas');
-    const emptyLookMsg = document.getElementById('emptyLookMsg');
-    const lookTotalText = document.getElementById('lookTotal');
     const buyLookBtn = document.getElementById('buyLookBtn');
 
     document.querySelectorAll('.add-to-look').forEach(btn => {
         btn.onclick = (e) => {
             const card = e.target.closest('.product-card');
-            const itemInfo = {
+            const item = {
                 name: card.dataset.name,
                 price: parseFloat(card.dataset.price),
-                url: card.dataset.url,
                 img: card.querySelector('img').src
             };
             
-            // Verifica se já não adicionou a peça
-            const alreadyInLook = lookItems.some(item => item.name === itemInfo.name);
-            if(!alreadyInLook) {
-                lookItems.push(itemInfo);
-                updateLook();
-                // Feedback visual rápido no botão
-                const originalText = btn.innerText;
-                btn.innerText = "✅ Adicionado";
-                btn.style.backgroundColor = "var(--accent-color)";
-                btn.style.color = "white";
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.style.backgroundColor = "transparent";
-                    btn.style.color = "var(--text-color)";
-                }, 1500);
-            } else {
-                alert("Esta peça já está no seu look!");
+            if(!lookItems.some(i => i.name === item.name)) {
+                lookItems.push(item);
+                updateLookUI();
+                alert("Peça enviada ao provador!");
             }
         };
     });
 
-    function updateLook() {
-        // Limpa o canvas, menos a mensagem original
+    function updateLookUI() {
         lookCanvas.innerHTML = '';
         let total = 0;
-
-        if (lookItems.length === 0) {
-            lookCanvas.appendChild(emptyLookMsg);
-            emptyLookMsg.style.display = 'block';
+        if(lookItems.length === 0) {
+            lookCanvas.innerHTML = '<p>Arraste peças aqui para começar seu look!</p>';
             buyLookBtn.style.display = 'none';
         } else {
-            emptyLookMsg.style.display = 'none';
             buyLookBtn.style.display = 'block';
-
             lookItems.forEach((item, i) => {
                 total += item.price;
                 const div = document.createElement('div');
                 div.className = 'look-item';
+                div.style.padding = '15px';
+                div.style.width = '150px';
                 div.innerHTML = `
-                    <button class="remove-look-btn" onclick="removeFromLook(${i})">&times;</button>
-                    <img src="${item.img}" alt="${item.name}">
-                    <span>${item.name}</span>
+                    <img src="${item.img}" style="width:100%; border-radius:10px; margin-bottom:10px;">
+                    <p style="font-size:12px; font-weight:bold;">${item.name}</p>
+                    <button onclick="removeFromLook(${i})" style="background:red; color:white; border:none; border-radius:50%; width:20px; cursor:pointer;">&times;</button>
                 `;
                 lookCanvas.appendChild(div);
             });
         }
-        lookTotalText.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        document.getElementById('lookTotal').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
     }
 
     window.removeFromLook = (i) => {
         lookItems.splice(i, 1);
-        updateLook();
+        updateLookUI();
     };
 
-    // Comprar o look inteiro de uma vez
     buyLookBtn.onclick = () => {
-        lookItems.forEach(item => {
-            cart.push({ name: item.name, price: item.price, url: item.url });
-        });
-        updateCart();
+        lookItems.forEach(item => cart.push({name: item.name, price: item.price}));
+        updateCartUI();
         sidebar.classList.add('open');
-        alert("Look completo adicionado ao carrinho!");
     };
 
-    // Busca
+    // Busca Simples
     document.getElementById('searchInput').oninput = (e) => {
         const val = e.target.value.toLowerCase();
         document.querySelectorAll('.product-card').forEach(card => {
