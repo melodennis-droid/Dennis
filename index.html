@@ -56,7 +56,7 @@
 
         .header-actions { display: flex; align-items: center; gap: 15px; }
 
-        #themeToggle, #cartToggle {
+        #themeToggle, #cartToggle, #userToggle {
             background: none;
             border: none;
             font-size: 24px;
@@ -283,6 +283,103 @@
         }
         .look-footer h3 { margin-bottom: 15px; }
 
+        /* --- ESTILOS DO MODAL DE CADASTRO --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--element-bg);
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 25px var(--shadow-color);
+            position: relative;
+            transform: translateY(-20px);
+            transition: 0.3s;
+        }
+
+        .modal-overlay.open .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--accent-color);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            color: var(--text-color);
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .register-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .register-btn:hover {
+            background: var(--accent-hover);
+        }
+
         @media(max-width: 600px) {
             .products { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .product-card img { height: 160px; }
@@ -296,8 +393,9 @@
 <header>
     <h1>Fashion Store</h1>
     <div class="header-actions">
-        <button id="themeToggle">☀️</button>
-        <button id="cartToggle">🛒 <span id="cartCount">0</span></button>
+        <button id="userToggle" title="Cadastro/Login">👤</button>
+        <button id="themeToggle" title="Mudar Tema">☀️</button>
+        <button id="cartToggle" title="Carrinho">🛒 <span id="cartCount">0</span></button>
     </div>
 </header>
 
@@ -312,6 +410,31 @@
 
 <div class="search-bar" id="searchContainer">
     <input type="text" id="searchInput" placeholder="O que você está procurando?">
+</div>
+
+<div class="modal-overlay" id="registerModal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeRegisterModal">&times;</span>
+        <h2>Criar Conta</h2>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="regName">Nome Completo</label>
+                <input type="text" id="regName" placeholder="Digite seu nome" required>
+            </div>
+            <div class="form-group">
+                <label for="regEmail">E-mail</label>
+                <input type="email" id="regEmail" placeholder="Digite seu e-mail" required>
+            </div>
+            <div class="form-group">
+                <label for="regPassword">Senha</label>
+                <input type="password" id="regPassword" placeholder="Crie uma senha" required>
+            </div>
+            <button type="submit" class="register-btn">Cadastrar</button>
+            <p style="text-align: center; margin-top: 15px; font-size: 13px;">
+                Já tem uma conta? <a href="#" style="color: var(--accent-color); text-decoration: none;">Faça Login</a>
+            </p>
+        </form>
+    </div>
 </div>
 
 <aside id="cartSidebar">
@@ -400,7 +523,7 @@
             </div>
         </div>
 
-        <div class="product-card" data-name="Slipstream" data-price="479,99" data-url="https://br.puma.com/pd/tenis-slipstream-lth/391764.html?color=02">
+        <div class="product-card" data-name="Slipstream" data-price="479.99" data-url="https://br.puma.com/pd/tenis-slipstream-lth/391764.html?color=02">
             <img src="https://images.puma.com/image/upload/f_auto,q_auto,w_600,b_rgb:FAFAFA/global/391764/02/sv01/fnd/BRA/fmt/png" alt="NB 550">
             <div class="card-content">
                 <h3>Tênis Slipstream lth
@@ -452,6 +575,38 @@
     themeToggle.onclick = () => {
         document.body.classList.toggle('light-mode');
         themeToggle.innerText = document.body.classList.contains('light-mode') ? '🌙' : '☀️';
+    };
+
+    // --- LÓGICA DO MODAL DE CADASTRO ---
+    const userToggle = document.getElementById('userToggle');
+    const registerModal = document.getElementById('registerModal');
+    const closeRegisterModal = document.getElementById('closeRegisterModal');
+    const registerForm = document.getElementById('registerForm');
+
+    // Abrir o modal
+    userToggle.onclick = () => {
+        registerModal.classList.add('open');
+    };
+
+    // Fechar o modal clicando no 'X'
+    closeRegisterModal.onclick = () => {
+        registerModal.classList.remove('open');
+    };
+
+    // Fechar o modal clicando fora dele
+    window.onclick = (event) => {
+        if (event.target === registerModal) {
+            registerModal.classList.remove('open');
+        }
+    };
+
+    // Simular o envio do formulário
+    registerForm.onsubmit = (e) => {
+        e.preventDefault(); // Evita recarregar a página
+        const nome = document.getElementById('regName').value;
+        alert(`Conta criada com sucesso!\nBem-vindo(a), ${nome}!`);
+        registerModal.classList.remove('open');
+        registerForm.reset(); // Limpa os campos após enviar
     };
 
     // Abas
