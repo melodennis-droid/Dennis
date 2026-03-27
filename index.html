@@ -4,42 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Store - Nova Coleção</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --text-color: #f0f0f0;
-            --header-bg: #000000;
-            --element-bg: #111111;
-            --border-color: #222222;
-            --btn-inactive: #222222;
-            --accent-color: #ff3b3b;
-            --accent-hover: #d32f2f;
-            --shadow-color: rgba(0, 0, 0, 0.5);
-            --cart-bg: #1a1a1a;
-            --look-bg: #151515;
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --header-bg: #0a0a0a;
+            --element-bg: #1e1e1e;
+            --border-color: #2a2a2a;
+            --btn-inactive: transparent;
+            --accent-color: #ff4757; /* Vermelho mais moderno */
+            --accent-hover: #ff6b81;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --cart-bg: #181818;
+            --look-bg: #1a1a1a;
         }
 
         body.light-mode {
-            --bg-color: #f4f4f5;
-            --text-color: #1a1a1a;
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
             --header-bg: #ffffff;
             --element-bg: #ffffff;
-            --border-color: #dddddd;
-            --btn-inactive: #e0e0e0;
-            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-color: #e9ecef;
+            --btn-inactive: transparent;
+            --shadow-color: rgba(0, 0, 0, 0.08);
             --cart-bg: #ffffff;
-            --look-bg: #f9f9f9;
+            --look-bg: #f8f9fa;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
         
         body { 
             background-color: var(--bg-color); 
             color: var(--text-color); 
-            transition: 0.3s;
+            transition: background-color 0.3s, color 0.3s;
             overflow-x: hidden;
         }
 
+        /* --- HEADER --- */
         header {
             background-color: var(--header-bg);
             position: sticky;
@@ -48,343 +50,205 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
+            padding: 20px 5%;
             border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
         }
 
-        header h1 { font-size: 22px; color: var(--accent-color); text-transform: uppercase; letter-spacing: 2px; }
+        header h1 { font-size: 24px; font-weight: 700; color: var(--accent-color); text-transform: uppercase; letter-spacing: 1px; }
 
-        .header-actions { display: flex; align-items: center; gap: 15px; }
+        .header-actions { display: flex; align-items: center; gap: 20px; }
 
         #themeToggle, #cartToggle, #userToggle {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text-color);
-            position: relative;
+            background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-color); position: relative; transition: 0.2s;
         }
+        
+        #themeToggle:hover, #cartToggle:hover, #userToggle:hover { transform: scale(1.1); }
 
         #cartCount {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--accent-color);
-            color: white;
-            font-size: 12px;
-            padding: 2px 6px;
-            border-radius: 50%;
+            position: absolute; top: -8px; right: -10px; background: var(--accent-color); color: white;
+            font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 50%;
         }
 
-        nav { display: flex; gap: 10px; justify-content: center; padding: 15px; flex-wrap: wrap; }
+        /* --- NAVEGAÇÃO --- */
+        nav { display: flex; gap: 20px; justify-content: center; padding: 25px 5%; flex-wrap: wrap; }
         nav button {
-            background: var(--btn-inactive);
-            border: none;
-            padding: 8px 15px;
-            color: var(--text-color);
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.2s;
+            background: transparent; border: none; color: var(--text-color); font-size: 14px;
+            font-weight: 600; cursor: pointer; transition: 0.3s; padding: 5px 0;
+            position: relative; text-transform: uppercase; letter-spacing: 1px;
         }
-        nav button.active { background-color: var(--accent-color); color: white; }
         
-        /* Destaque para a aba de montar look */
-        nav button[data-category="montar-look"] { border: 1px solid var(--accent-color); }
-        nav button[data-category="montar-look"].active { background-color: var(--accent-color); color: white; }
-
-        .search-bar { text-align: center; padding: 10px 20px; }
-        .search-bar input {
-            width: 100%;
-            max-width: 500px;
-            padding: 12px 25px;
-            border-radius: 30px;
-            background-color: var(--element-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            outline: none;
+        nav button::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: 0; left: 0; background-color: var(--accent-color); transition: 0.3s;
         }
+        
+        nav button:hover::after, nav button.active::after { width: 100%; }
+        nav button.active { color: var(--accent-color); }
+        
+        nav button[data-category="montar-look"] { border: 1px solid var(--accent-color); padding: 8px 15px; border-radius: 20px; }
+        nav button[data-category="montar-look"]::after { display: none; }
+        nav button[data-category="montar-look"]:hover, nav button[data-category="montar-look"].active { background-color: var(--accent-color); color: white; }
 
+        /* --- BUSCA --- */
+        .search-bar { text-align: center; padding: 0 20px 30px; }
+        .search-bar input {
+            width: 100%; max-width: 600px; padding: 15px 25px; border-radius: 8px;
+            background-color: var(--element-bg); color: var(--text-color);
+            border: 1px solid var(--border-color); outline: none; transition: 0.3s; font-size: 15px;
+        }
+        .search-bar input:focus { border-color: var(--accent-color); box-shadow: 0 0 10px rgba(255, 71, 87, 0.1); }
+
+        /* --- PRODUTOS --- */
         .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 25px;
-            padding: 20px 5%;
-            max-width: 1300px;
-            margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; padding: 20px 5% 60px; max-width: 1300px; margin: 0 auto;
         }
 
         .product-card {
-            background: var(--element-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: 0.3s;
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
+            background: var(--element-bg); border-radius: 12px; overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s; border: 1px solid var(--border-color); display: flex; flex-direction: column;
         }
 
-        .product-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px var(--shadow-color); border-color: transparent; }
 
-        .product-card img { width: 100%; height: 250px; object-fit: cover; }
+        .product-card img { width: 100%; height: 320px; object-fit: cover; }
         
-        .card-content { padding: 15px; text-align: center; flex-grow: 1; }
-        .card-content h3 { font-size: 16px; margin-bottom: 10px; }
-        .price { color: var(--accent-color); font-weight: bold; font-size: 18px; margin-bottom: 15px; display: block; }
+        .card-content { padding: 20px; text-align: left; flex-grow: 1; display: flex; flex-direction: column;}
+        .card-content h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .price { color: var(--accent-color); font-weight: 700; font-size: 18px; margin-bottom: 20px; display: block; }
 
-        .btn-group { display: flex; flex-direction: column; gap: 8px; }
+        .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
 
         .btn-link, .add-to-look {
-            text-decoration: none;
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            padding: 8px;
-            border-radius: 5px;
-            font-size: 13px;
-            font-weight: bold;
-            transition: 0.3s;
-            cursor: pointer;
+            text-align: center; text-decoration: none; background: transparent; border: 1px solid var(--border-color);
+            color: var(--text-color); padding: 10px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.3s;
         }
-        .btn-link { border-color: var(--accent-color); color: var(--accent-color); }
-        .btn-link:hover { background: var(--accent-color); color: white; }
-        
+        .btn-link:hover { border-color: var(--text-color); }
         .add-to-look:hover { background: var(--text-color); color: var(--bg-color); }
 
         .add-to-cart {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
+            background: var(--accent-color); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: 0.3s; font-size: 14px;
         }
+        .add-to-cart:hover { background: var(--accent-hover); }
 
+        /* --- CARRINHO LATERAL --- */
         #cartSidebar {
-            position: fixed;
-            top: 0;
-            right: -350px;
-            width: 320px;
-            height: 100%;
-            background: var(--cart-bg);
-            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
-            z-index: 2000;
-            transition: 0.4s;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
+            position: fixed; top: 0; right: -350px; width: 350px; height: 100%;
+            background: var(--cart-bg); box-shadow: -5px 0 25px rgba(0,0,0,0.5); z-index: 2000;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding: 25px; display: flex; flex-direction: column;
         }
         #cartSidebar.open { right: 0; }
-        .cart-header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
-        #cartItems { flex-grow: 1; overflow-y: auto; margin: 20px 0; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px; }
+        .cart-header h2 { font-weight: 600; font-size: 18px; }
+        #cartItems { flex-grow: 1; overflow-y: auto; margin-bottom: 20px; }
         
         .cart-item { 
-            margin-bottom: 15px; 
-            padding-bottom: 10px; 
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
+            margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color);
+            display: flex; flex-direction: column; gap: 8px;
         }
+        .cart-item strong { font-size: 14px; }
+        .cart-item span { color: var(--accent-color); font-weight: 600; }
         
-        .cart-item-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 5px;
-        }
+        .cart-item-actions { display: flex; justify-content: space-between; align-items: center; }
 
         .cart-buy-link {
-            color: #28a745;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: bold;
-            border: 1px solid #28a745;
-            padding: 2px 8px;
-            border-radius: 4px;
+            color: #28a745; text-decoration: none; font-size: 12px; font-weight: bold;
+            border: 1px solid #28a745; padding: 4px 10px; border-radius: 4px; transition: 0.2s;
         }
+        .cart-buy-link:hover { background: #28a745; color: white; }
 
-        .checkout-btn { background: #28a745; color: white; border: none; width: 100%; padding: 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.2s;}
+        .checkout-btn { 
+            background: #28a745; color: white; border: none; width: 100%; padding: 15px; 
+            border-radius: 6px; cursor: pointer; font-weight: 700; transition: 0.2s; font-size: 15px;
+        }
         .checkout-btn:hover { background: #218838; }
 
         .category { display: none; }
         .category.active { display: contents; }
 
-        /* Estilos do Montador de Look */
+        /* --- MONTADOR DE LOOKS --- */
         .montar-look-container {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 5%;
-            max-width: 1000px;
-            margin: 0 auto;
-            width: 100%;
+            display: none; flex-direction: column; align-items: center; padding: 20px 5%; max-width: 1000px; margin: 0 auto; width: 100%;
         }
         .montar-look-container.active { display: flex; }
 
         .look-header { text-align: center; margin-bottom: 30px; }
-        .look-header h2 { color: var(--accent-color); margin-bottom: 10px; }
+        .look-header h2 { color: var(--accent-color); margin-bottom: 10px; font-weight: 700; }
+        .look-header p { font-size: 14px; color: var(--text-color); opacity: 0.8; }
 
         .look-canvas {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            background: var(--look-bg);
-            border: 2px dashed var(--border-color);
-            border-radius: 15px;
-            padding: 30px;
-            min-height: 300px;
-            width: 100%;
-            margin-bottom: 20px;
+            display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: center;
+            background: var(--look-bg); border: 1px solid var(--border-color); border-radius: 12px;
+            padding: 40px; min-height: 350px; width: 100%; margin-bottom: 30px;
         }
 
         .look-item {
-            position: relative;
-            width: 150px;
-            background: var(--element-bg);
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px var(--shadow-color);
-            text-align: center;
+            position: relative; width: 160px; background: var(--element-bg); padding: 15px;
+            border-radius: 8px; box-shadow: 0 4px 10px var(--shadow-color); text-align: center; border: 1px solid var(--border-color);
         }
 
-        .look-item img {
-            width: 100%;
-            height: 120px;
-            object-fit: contain;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
+        .look-item img { width: 100%; height: 140px; object-fit: contain; margin-bottom: 10px; }
 
-        .look-item span { font-size: 12px; font-weight: bold; display: block; }
+        .look-item span { font-size: 13px; font-weight: 600; display: block; }
         .remove-look-btn {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: red;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            font-weight: bold;
+            position: absolute; top: -10px; right: -10px; background: var(--accent-color); color: white;
+            border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-weight: bold; font-size: 14px;
         }
 
         .look-footer {
-            width: 100%;
-            background: var(--element-bg);
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            text-align: center;
+            width: 100%; background: var(--element-bg); padding: 25px; border-radius: 8px;
+            border: 1px solid var(--border-color); text-align: center;
         }
-        .look-footer h3 { margin-bottom: 15px; }
+        .look-footer h3 { margin-bottom: 20px; font-size: 20px; font-weight: 700;}
 
-        /* --- ESTILOS DO MODAL DE CADASTRO --- */
+        /* --- MODAL DE CADASTRO --- */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8); display: flex; justify-content: center; align-items: center;
+            z-index: 3000; opacity: 0; visibility: hidden; transition: 0.3s; backdrop-filter: blur(5px);
         }
 
-        .modal-overlay.open {
-            opacity: 1;
-            visibility: visible;
-        }
+        .modal-overlay.open { opacity: 1; visibility: visible; }
 
         .modal-content {
-            background: var(--element-bg);
-            width: 90%;
-            max-width: 400px;
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 25px var(--shadow-color);
-            position: relative;
-            transform: translateY(-20px);
-            transition: 0.3s;
+            background: var(--element-bg); width: 90%; max-width: 420px; padding: 40px 30px;
+            border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            position: relative; transform: translateY(-20px); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .modal-overlay.open .modal-content {
-            transform: translateY(0);
-        }
+        .modal-overlay.open .modal-content { transform: translateY(0); }
 
         .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text-color);
+            position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-color); transition: 0.2s;
         }
+        .close-modal:hover { color: var(--accent-color); }
 
-        .modal-content h2 {
-            margin-bottom: 20px;
-            text-align: center;
-            color: var(--accent-color);
-        }
+        .modal-content h2 { margin-bottom: 25px; text-align: center; color: var(--accent-color); font-weight: 700; }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+        .form-group { margin-bottom: 20px; }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-            font-weight: bold;
-        }
+        .form-group label { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
 
         .form-group input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-color);
-            color: var(--text-color);
-            outline: none;
+            width: 100%; padding: 14px; border-radius: 6px; border: 1px solid var(--border-color);
+            background: var(--bg-color); color: var(--text-color); outline: none; font-size: 14px; transition: 0.3s;
         }
 
-        .form-group input:focus {
-            border-color: var(--accent-color);
-        }
+        .form-group input:focus { border-color: var(--accent-color); box-shadow: 0 0 8px rgba(255, 71, 87, 0.2); }
 
         .register-btn {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 10px;
+            background: var(--accent-color); color: white; border: none; width: 100%; padding: 14px;
+            border-radius: 6px; font-weight: 700; font-size: 15px; cursor: pointer; transition: 0.3s; margin-top: 10px; text-transform: uppercase;
         }
 
-        .register-btn:hover {
-            background: var(--accent-hover);
-        }
+        .register-btn:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3); }
 
         @media(max-width: 600px) {
-            .products { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .product-card img { height: 160px; }
-            #cartSidebar { width: 100%; }
-            .look-item { width: 120px; }
+            .products { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .product-card img { height: 200px; }
+            #cartSidebar { width: 100%; right: -100%; }
+            .look-item { width: 130px; }
+            .search-bar { padding: 0 15px 20px; }
         }
     </style>
 </head>
@@ -405,7 +269,7 @@
     <button class="tab-btn" data-category="camisetas">Camisetas</button>
     <button class="tab-btn" data-category="acessorios">Acessórios</button>
     <button class="tab-btn" data-category="tenis">Tênis</button>
-    <button class="tab-btn" data-category="montar-look" style="margin-left: 20px;">✨ Montar Look</button>
+    <button class="tab-btn" data-category="montar-look" style="margin-left: 10px;">✨ Montar Look</button>
 </nav>
 
 <div class="search-bar" id="searchContainer">
@@ -430,8 +294,8 @@
                 <input type="password" id="regPassword" placeholder="Crie uma senha" required>
             </div>
             <button type="submit" class="register-btn">Cadastrar</button>
-            <p style="text-align: center; margin-top: 15px; font-size: 13px;">
-                Já tem uma conta? <a href="#" style="color: var(--accent-color); text-decoration: none;">Faça Login</a>
+            <p style="text-align: center; margin-top: 20px; font-size: 13px;">
+                Já tem uma conta? <a href="#" style="color: var(--accent-color); text-decoration: none; font-weight: 600;">Faça Login</a>
             </p>
         </form>
     </div>
@@ -440,11 +304,11 @@
 <aside id="cartSidebar">
     <div class="cart-header">
         <h2>Carrinho</h2>
-        <button onclick="document.getElementById('cartSidebar').classList.remove('open')" style="background:none; border:none; color:var(--text-color); font-size:25px; cursor:pointer;">&times;</button>
+        <button onclick="document.getElementById('cartSidebar').classList.remove('open')" style="background:none; border:none; color:var(--text-color); font-size:28px; cursor:pointer;">&times;</button>
     </div>
     <div id="cartItems"></div>
     <div class="cart-footer">
-        <p style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:bold;">Total: <span id="cartTotal">R$ 0,00</span></p>
+        <p style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:700; font-size: 16px;">Total: <span id="cartTotal">R$ 0,00</span></p>
         <button class="checkout-btn" onclick="alert('Redirecionando para checkout...')">Finalizar Tudo</button>
     </div>
 </aside>
@@ -456,8 +320,8 @@
     </div>
     
     <div class="look-canvas" id="lookCanvas">
-        <p id="emptyLookMsg" style="align-self: center; color: gray;">Seu provador está vazio. Adicione algumas peças!</p>
-        </div>
+        <p id="emptyLookMsg" style="color: gray; font-weight: 600;">Seu provador está vazio. Adicione algumas peças!</p>
+    </div>
 
     <div class="look-footer">
         <h3>Total do Look: <span id="lookTotal">R$ 0,00</span></h3>
@@ -526,8 +390,7 @@
         <div class="product-card" data-name="Slipstream" data-price="479.99" data-url="https://br.puma.com/pd/tenis-slipstream-lth/391764.html?color=02">
             <img src="https://images.puma.com/image/upload/f_auto,q_auto,w_600,b_rgb:FAFAFA/global/391764/02/sv01/fnd/BRA/fmt/png" alt="NB 550">
             <div class="card-content">
-                <h3>Tênis Slipstream lth
-</h3>
+                <h3>Tênis Slipstream lth</h3>
                 <span class="price">R$ 479,99</span>
                 <div class="btn-group">
                     <button class="add-to-look">👕 Adicionar ao Look</button>
@@ -570,6 +433,7 @@
 </main>
 
 <script>
+    // Todo o seu JavaScript original está aqui intacto!
     // Tema
     const themeToggle = document.getElementById('themeToggle');
     themeToggle.onclick = () => {
@@ -583,30 +447,26 @@
     const closeRegisterModal = document.getElementById('closeRegisterModal');
     const registerForm = document.getElementById('registerForm');
 
-    // Abrir o modal
     userToggle.onclick = () => {
         registerModal.classList.add('open');
     };
 
-    // Fechar o modal clicando no 'X'
     closeRegisterModal.onclick = () => {
         registerModal.classList.remove('open');
     };
 
-    // Fechar o modal clicando fora dele
     window.onclick = (event) => {
         if (event.target === registerModal) {
             registerModal.classList.remove('open');
         }
     };
 
-    // Simular o envio do formulário
     registerForm.onsubmit = (e) => {
-        e.preventDefault(); // Evita recarregar a página
+        e.preventDefault();
         const nome = document.getElementById('regName').value;
         alert(`Conta criada com sucesso!\nBem-vindo(a), ${nome}!`);
         registerModal.classList.remove('open');
-        registerForm.reset(); // Limpa os campos após enviar
+        registerForm.reset(); 
     };
 
     // Abas
@@ -619,7 +479,6 @@
             tabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
             
-            // Lógica para esconder/mostrar grid de produtos e barra de pesquisa
             if(tab.dataset.category === 'montar-look') {
                 searchContainer.style.display = 'none';
                 productGrid.style.display = 'none';
@@ -642,7 +501,6 @@
 
     document.getElementById('cartToggle').onclick = () => sidebar.classList.add('open');
 
-    // Função de adicionar ao carrinho
     function addToCart(name, price, url) {
         cart.push({ name, price, url });
         updateCart();
@@ -669,7 +527,7 @@
                     </div>
                     <div class="cart-item-actions">
                         <a href="${item.url}" target="_blank" class="cart-buy-link">Comprar Item</a>
-                        <button onclick="removeFromCart(${i})" style="color:red; background:none; border:none; cursor:pointer; font-size:11px">Remover</button>
+                        <button onclick="removeFromCart(${i})" style="color:red; background:none; border:none; cursor:pointer; font-size:13px; font-weight: bold;">Remover</button>
                     </div>
                 </div>`;
         });
@@ -699,12 +557,11 @@
                 img: card.querySelector('img').src
             };
             
-            // Verifica se já não adicionou a peça
             const alreadyInLook = lookItems.some(item => item.name === itemInfo.name);
             if(!alreadyInLook) {
                 lookItems.push(itemInfo);
                 updateLook();
-                // Feedback visual rápido no botão
+                
                 const originalText = btn.innerText;
                 btn.innerText = "✅ Adicionado";
                 btn.style.backgroundColor = "var(--accent-color)";
@@ -721,7 +578,6 @@
     });
 
     function updateLook() {
-        // Limpa o canvas, menos a mensagem original
         lookCanvas.innerHTML = '';
         let total = 0;
 
@@ -753,7 +609,6 @@
         updateLook();
     };
 
-    // Comprar o look inteiro de uma vez
     buyLookBtn.onclick = () => {
         lookItems.forEach(item => {
             cart.push({ name: item.name, price: item.price, url: item.url });
