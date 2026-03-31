@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Store - Controle de Estoque</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estoque.css">
+</head>
+<body>
+
+<header>
+    <h1>Gestão de Estoque</h1>
+    <div class="header-actions">
+        <a href="index.html" class="nav-link" title="Voltar para a Loja">Ir para a Loja 🛍️</a>
+        <button id="themeToggle" title="Mudar Tema">☀️</button>
+    </div>
+</header>
+
+<main class="dashboard-container">
+    <section class="add-product-section">
+        <h2>Cadastrar Nova Peça</h2>
+        <form id="stockForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="prodName">Nome do Produto</label>
+                    <input type="text" id="prodName" placeholder="Ex: Jaqueta Corta Vento" required>
+                </div>
+                <div class="form-group">
+                    <label for="prodCategory">Categoria</label>
+                    <select id="prodCategory" required>
+                        <option value="">Selecione...</option>
+                        <option value="Shorts">Shorts</option>
+                        <option value="Calças">Calças</option>
+                        <option value="Camisetas">Camisetas</option>
+                        <option value="Acessórios">Acessórios</option>
+                        <option value="Tênis">Tênis</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="prodPrice">Preço (R$)</label>
+                    <input type="number" id="prodPrice" step="0.01" placeholder="0.00" required>
+                </div>
+                <div class="form-group">
+                    <label for="prodQtd">Quantidade em Estoque</label>
+                    <input type="number" id="prodQtd" placeholder="0" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="primary-btn">Adicionar ao Estoque</button>
+        </form>
+    </section>
+
+    <section class="inventory-section">
+        <h2>Estoque Atual</h2>
+        <div class="table-container">
+            <table id="inventoryTable">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Categoria</th>
+                        <th>Preço</th>
+                        <th>Qtd.</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="inventoryBody">
+                    </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<script src="estoque.js"></script>
+</body>
+</html>
