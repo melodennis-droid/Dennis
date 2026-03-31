@@ -5,7 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Store - Controle de Estoque</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="estoque.css">
+    
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --header-bg: #0a0a0a;
+            --element-bg: #1e1e1e;
+            --border-color: #2a2a2a;
+            --accent-color: #ff4757;
+            --accent-hover: #ff6b81;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --danger-color: #ff3b30;
+            --success-color: #28a745;
+        }
+
+        body.light-mode {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --header-bg: #ffffff;
+            --element-bg: #ffffff;
+            --border-color: #e9ecef;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            position: sticky; top: 0; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 5%; border-bottom: 1px solid var(--border-color);
+        }
+        header h1 { font-size: 24px; font-weight: 700; color: var(--accent-color); text-transform: uppercase; }
+        .header-actions { display: flex; align-items: center; gap: 20px; }
+        .nav-link { color: var(--text-color); text-decoration: none; font-weight: 600; font-size: 14px; transition: 0.3s; }
+        .nav-link:hover { color: var(--accent-color); }
+        #themeToggle { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-color); transition: 0.2s; }
+        #themeToggle:hover { transform: scale(1.1); }
+
+        .dashboard-container { padding: 40px 5%; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
+        h2 { font-size: 20px; margin-bottom: 20px; border-bottom: 2px solid var(--accent-color); display: inline-block; padding-bottom: 5px; }
+
+        .add-product-section, .inventory-section { background: var(--element-bg); padding: 30px; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 10px 25px var(--shadow-color); }
+        .form-row { display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
+        .form-group { flex: 1; min-width: 250px; }
+        .form-group label { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 600; text-transform: uppercase; }
+        .form-group input, .form-group select {
+            width: 100%; padding: 12px; border-radius: 6px; border: 1px solid var(--border-color);
+            background: var(--bg-color); color: var(--text-color); outline: none; font-size: 14px; transition: 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus { border-color: var(--accent-color); }
+        .primary-btn {
+            background: var(--accent-color); color: white; border: none; padding: 14px 24px;
+            border-radius: 6px; font-weight: 700; font-size: 15px; cursor: pointer; transition: 0.3s; text-transform: uppercase;
+        }
+        .primary-btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
+
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 15px; border-bottom: 1px solid var(--border-color); }
+        th { font-weight: 600; text-transform: uppercase; font-size: 13px; color: var(--accent-color); }
+        td { font-size: 14px; font-weight: 500; }
+        tr:hover { background-color: var(--bg-color); }
+
+        .status-badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; color: white; }
+        .status-ok { background: var(--success-color); }
+        .status-low { background: var(--danger-color); }
+
+        .delete-btn { background: transparent; border: 1px solid var(--danger-color); color: var(--danger-color); padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.3s; }
+        .delete-btn:hover { background: var(--danger-color); color: white; }
+    </style>
 </head>
 <body>
 
@@ -75,6 +151,73 @@
     </section>
 </main>
 
-<script src="estoque.js"></script>
+<script>
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.onclick = () => {
+        document.body.classList.toggle('light-mode');
+        themeToggle.innerText = document.body.classList.contains('light-mode') ? '🌙' : '☀️';
+    };
+
+    let inventario = [
+        { id: 1, nome: "Jorts Super Baggy", categoria: "Shorts", preco: 139.90, qtd: 15 },
+        { id: 2, nome: "Tênis PUMA-180", categoria: "Tênis", preco: 699.99, qtd: 3 },
+        { id: 3, nome: "Polo Retro América", categoria: "Camisetas", preco: 112.11, qtd: 0 }
+    ];
+
+    const form = document.getElementById('stockForm');
+    const tableBody = document.getElementById('inventoryBody');
+
+    function renderizarTabela() {
+        tableBody.innerHTML = ''; 
+
+        inventario.forEach((item) => {
+            let statusClass = item.qtd > 5 ? 'status-ok' : 'status-low';
+            let statusText = item.qtd > 5 ? 'Em Estoque' : (item.qtd === 0 ? 'Esgotado' : 'Estoque Baixo');
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${item.nome}</td>
+                <td>${item.categoria}</td>
+                <td>R$ ${item.preco.toFixed(2).replace('.', ',')}</td>
+                <td>${item.qtd}</td>
+                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                <td>
+                    <button class="delete-btn" onclick="removerItem(${item.id})">Remover</button>
+                </td>
+            `;
+            tableBody.appendChild(tr);
+        });
+    }
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const nome = document.getElementById('prodName').value;
+        const categoria = document.getElementById('prodCategory').value;
+        const preco = parseFloat(document.getElementById('prodPrice').value);
+        const qtd = parseInt(document.getElementById('prodQtd').value);
+
+        const novoItem = {
+            id: Date.now(), 
+            nome: nome,
+            categoria: categoria,
+            preco: preco,
+            qtd: qtd
+        };
+
+        inventario.push(novoItem);
+        renderizarTabela();
+        form.reset(); 
+    });
+
+    window.removerItem = (id) => {
+        if(confirm("Tem certeza que deseja remover este item do estoque?")) {
+            inventario = inventario.filter(item => item.id !== id);
+            renderizarTabela();
+        }
+    };
+
+    renderizarTabela();
+</script>
 </body>
 </html>
